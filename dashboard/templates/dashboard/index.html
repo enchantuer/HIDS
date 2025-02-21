@@ -4,157 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <style>
-        body {
-            background-color: lightgray;
-        }
-        h1 {
-            font-size: 1rem;
-        }
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: auto auto auto auto;
-            gap: 20px;
-        }
-        #summary {
-            grid-column: 1/5;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
-        #alert-evolution {
-            grid-column: 1/4;
-        }
-        #alert-type {
-            grid-column: 4/5;
-        }
-        #ia-stats {
-            grid-column: 1/2;
-        }
-        #agent-stats {
-            grid-column: 2/5;
-        }
-        #alerts {
-            grid-column: 1/5;
-        }
-
-        .stats > p {
-            margin: 0;
-        }
-        .stats > h1 {
-            margin: 0;
-            font-size: revert;
-        }
-        .stats {
-            padding-inline: clamp(20px, 5%, 100px);
-            text-align: center;
-        }
-        .chart img {
-            width: 100%;
-            height: 100%;
-        }
-        .chart > div {
-            margin: 10px 50px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        td {
-            text-align: center;
-        }
-        thead {
-            color: dodgerblue;
-            border-bottom: 2px solid lightgray;
-        }
-
-    </style>
+    <link rel="stylesheet" href="{% static 'dashboard/common.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="{% static 'dashboard/charts.js' %}" defer></script>
 </head>
 <body>
-<div class="grid-container">
-    <div class="card" id="summary">
-        <div class="stats">
-            <p> Total </p>
-            <h1> {{ alerts_number }} </h1>
+    <div class="grid-container">
+        <div class="card" id="summary">
+            <div class="stats">
+                <h2> Total </h2>
+                <span> {{ alerts_number }} </span>
+            </div>
+            <div class="stats">
+                <h2> NB Agents </h2>
+                <span> {{ agents_number }} </span>
+            </div>
+            <div class="stats">
+                <h2> Downs </h2>
+                <span> {{ agents_down_number }} </span>
+            </div>
         </div>
-        <div class="stats">
-            <p> NB Agents </p>
-            <h1> {{ agents_number }} </h1>
+        <div class="card" id="alert-evolution">
+            <h2>Evolution des alertes</h2>
+            <hr>
+            <div class="align-bottom">
+                <canvas class="chart" id="alert-evolution-chart"></canvas>
+            </div>
         </div>
-        <div class="stats">
-            <p> NB Agents downs </p>
-            <h1> {{ agents_down_number }} </h1>
+        <div class="card" id="alert-type">
+            <h2>Types d'attaques</h2>
+            <hr>
+            <div class="align-bottom">
+                <canvas class="chart" id="alert-type-chart"></canvas>
+            </div>
+        </div>
+        <div class="card" id="ia-stats">
+            <h2>IA</h2>
+            <hr>
+            <div class="align-bottom">
+                <canvas class="chart" id="ia-stats-chart"></canvas>
+            </div>
+        </div>
+        <div class="card" id="agent-stats">
+            <h2>Agents Principaux</h2>
+            <hr>
+            <div class="align-bottom">
+                <canvas class="chart" id="agent-chart"></canvas>
+            </div>
+        </div>
+        <div class="card" id="alerts">
+            <h2>Dernières Alertes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Agent</th>
+                        <th scope="col">Agent Name</th>
+                        <th scope="col">Detection</th>
+                        <th scope="col">Tactic</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Level</th>
+                        <th scope="col">ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alert in alerts %}
+                        <td>{{ alert.time }}</td>
+                        <td>{{ alert.agent.id }}</td>
+                        <td>{{ alert.agent.name }}</td>
+                        <td>{{ alert.source }}</td>
+                        <td>{{ alert.type }}</td>
+                        <td>{{ alert.description }}</td>
+                        <td>{{ alert.level }}</td>
+                        <td>{{ alert.id }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="card chart" id="alert-evolution">
-        <h1>Evolution des alertes</h1>
-        <div>
-            <img src="{% static 'dashboard/img.png' %}" sizes="100%">
-        </div>
-    </div>
-    <div class="card chart" id="alert-type">
-        <h1>Types d'attaques</h1>
-        <div>
-            <img src="{% static 'dashboard/img_1.png' %}" sizes="100%">
-        </div>
-    </div>
-    <div class="card chart" id="ia-stats">
-        <h1>IA</h1>
-        <div>
-            <img src="{% static 'dashboard/img_2.png' %}" sizes="100%">
-        </div>
-    </div>
-    <div class="card chart" id="agent-stats">
-        <h1>Agents Principaux</h1>
-        <div>
-            <img src="{% static 'dashboard/img_3.png' %}" sizes="100%">
-        </div>
-    </div>
-    <div class="card" id="alerts">
-        <h1>Dernières Alertes</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">Time</th>
-                    <th scope="col">Agent</th>
-                    <th scope="col">Agent Name</th>
-                    <th scope="col">Detection</th>
-                    <th scope="col">Tactic</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Level</th>
-                    <th scope="col">ID</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--- <tr>
-                    <td>Jan 22 2024 09:50:20</td>
-                    <td>10</td>
-                    <td>Debian Server</td>
-                    <td>IA</td>
-                    <td>DDOS</td>
-                    <td>Signed Script Proxy Execute C://</td>
-                    <td>8</td>
-                    <td>1234</td>
-                </tr> -->
-                {% for alert in alerts %}
-                    <td>{{ alert.time }}</td>
-                    <td>{{ alert.agent.id }}</td>
-                    <td>{{ alert.agent.name }}</td>
-                    <td>{{ alert.source }}</td>
-                    <td>{{ alert.type }}</td>
-                    <td>{{ alert.description }}</td>
-                    <td>{{ alert.level }}</td>
-                    <td>{{ alert.id }}</td>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
 </body>
 </html>
