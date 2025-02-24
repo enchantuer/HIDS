@@ -16,7 +16,7 @@
     {{ chart.agent_stats|json_script:"agent-data" }}
 </head>
 <body>
-    {% include "dashboard/navbar.html" with current_page='alerts' %}
+    {% include "dashboard/navbar.html" with current_page='dashboard' %}
     <div class="grid-container">
         <div class="card" id="summary">
             <div class="stats">
