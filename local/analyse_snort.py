@@ -121,7 +121,7 @@ def analyse_pcap(pcap_path, rules):
 
     return alerts
 
-rules_file = "ADD PATH TO RULES FILE HERE"
+rules_file = "rules/snort3-community.rules"
 pcap_file = "ADD PATH TO PCAP FILE HERE"
 
 rules = load_snort_rules(rules_file)
