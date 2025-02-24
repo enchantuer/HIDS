@@ -13,6 +13,7 @@
 
 body {
     background-color: var(--background-color);
+    margin: 0;
 }
 
 .card {
@@ -38,5 +39,5 @@ body {
 
 .chart {
     width: 100% !important;
-    height: 100% !important;
+    height: max(150px, 30vh) !important;
 }
