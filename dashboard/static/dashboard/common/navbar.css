@@ -1,58 +1,53 @@
-/*
-body {
-    font-family: "roboto", sans-serif;
-    background-color: lightgray;
-    margin: 0;
-    padding: 0;
-}
-*/
 nav {
     overflow: hidden;
-    height: 60px;
-    background-color: #ffffff;
+    height: 4rem; /* 60px -> 4rem pour une meilleure adaptation */
+    background-color: var(--primary-color);
     display: grid;
-    grid-template-columns: auto auto 1fr  auto auto;
-    gap: 20px;
-    padding: 0 20px;
+    grid-template-columns: auto auto 1fr auto auto;
+    gap: 1.25rem; /* 20px -> 1.25rem */
+    padding-inline: 1.25rem; /* 20px -> 1.25rem */
     align-items: center;
-    width: auto;
-
 }
+
 .navbar-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem; /* 10px -> 0.625rem */
     white-space: nowrap;
 }
-.navbar-logo img{
-    height: 40px;
+
+.navbar-logo img {
+    height: 2.5rem; /* 40px -> 2.5rem */
     width: auto;
     cursor: pointer;
 }
+
 .navbar-logo p {
     font-family: 'Kantumruy Pro', sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
-    color: #3585F9;
+    font-size: 1rem; /* 15px -> 1rem */
+    color: var(--blue-color);
     margin: 0;
     cursor: pointer;
 }
+
 .navbar-bar {
-    height: 20px;
+    height: 1.25rem; /* 20px -> 1.25rem */
     width: 2px;
-    background-color: #F0F0F0;
+    background-color: var(--secondary-color);
 }
 
-.navbar-onglets {
+.navbar-tabs {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem; /* 10px -> 0.625rem */
 }
-.navbar-onglets-bloc{
-    color: black;
-    background-color: #f0f0f0;
+
+.navbar-tabs-bloc {
+    color: var(--on-secondary-color);
+    background-color: var(--secondary-color);
     width: 7.5rem;
-    height: 25px;
+    height: 2rem; /* 25px -> 2rem */
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -61,68 +56,87 @@ nav {
     cursor: pointer;
     transition: background-color 0.2s;
 }
+.navbar-tabs-bloc[aria-current="page"] {
+    background-color: var(--blue-color);
+    color: var(--primary-color);
+}
 
-.navbar-onglets-bloc p{
+.navbar-tabs-bloc p {
     transform: skew(20deg);
     align-self: center;
-    font-size: 15px;
+    font-size: 1rem; /* 15px -> 1rem */
 }
+
+.navbar-tabs-bloc:hover {
+    background-color: var(--dark-blue-color);
+    color: var(--primary-color);
+}
+.navbar-tabs-bloc:active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+
 .navbar-icon img {
-    height: 35px;
-    width: 35px;
+    height: 2.2rem; /* 35px -> 2.2rem */
+    width: 2.2rem;
     border-radius: 50%;
     align-items: center;
 }
+
 .navbar-burger {
     cursor: pointer;
 }
 
+/* Responsive Design */
 @media only screen and (max-width: 710px) {
-    .navbar-onglets-bloc {
+    .navbar-tabs-bloc {
         display: none;
     }
 }
+
 @media only screen and (min-width: 710px) {
-    .navbar-onglets-bloc-crop {
+    .navbar-tabs-bloc-crop {
         display: none !important;
     }
 }
 
-/* Dropdown menu (hidden by default) */
+/* Dropdown menu */
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 60px; /* Adjust to fit below navbar */
-    right: 20px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    top: 4rem; /* 60px -> 4rem */
+    right: 1.25rem; /* 20px -> 1.25rem */
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem;
     border-radius: 0 0 5px 5px;
     overflow: hidden;
     z-index: 1000;
-    padding: 5px 0;
+    padding: 0.3125rem 0; /* 5px -> 0.3125rem */
 }
 
- .dropdown-menu a {
+.dropdown-menu a {
     display: flex;
     align-items: center;
-    gap: 50px; /*écart entre l'icone et le texte*/
-    height: 25px;
-    padding: 5px 15px;
-    margin: 5px 10px;
+    gap: 3.125rem; /* 50px -> 3.125rem */
+    height: 2rem; /* 25px -> 2rem */
+    padding: 0.3125rem 0.9375rem; /* 5px 15px -> 0.3125rem 0.9375rem */
+    margin: 0.3125rem 0.625rem; /* 5px 10px -> 0.3125rem 0.625rem */
     border-radius: 5px;
     text-decoration: none;
-    color: black;
-    background-color: white;
+    color: var(--on-secondary-color);
+    background-color: var(--primary-color);
     transition: background-color 0.2s;
 }
-
+.dropdown-menu a[aria-current="page"] {
+    color: var(--blue-color);
+}
 
 .dropdown-menu a:hover {
-    background-color: #f0f0f0;
+    background-color: var(--secondary-color);
 }
 .dropdown-menu a:active {
-    background-color: white;
-    color: #1E5EBC;
+    background-color: var(--primary-color);
+    color: var(--dark-blue-color);
 }
 
 /* Show menu when active */

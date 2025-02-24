@@ -14,14 +14,14 @@
         <p>TELOCA AI</p>
     </div>
     <div class="navbar-bar">  </div>
-    <div class="navbar-onglets">
-        <div class="navbar-onglets-bloc navbar-Dashboard" style="background-color: #3585F9; color: white;">
+    <div class="navbar-tabs">
+        <div class="navbar-tabs-bloc navbar-Dashboard" {% if current_page == "dashboard" %} aria-current="page" {% endif %}>
             <p>Dashboard</p>
         </div>
-        <div class="navbar-onglets-bloc navbar-Alertes">
+        <div class="navbar-tabs-bloc navbar-Alertes" {% if current_page == "alerts" %} aria-current="page" {% endif %}>
             <p>Alertes</p>
         </div>
-        <div class="navbar-onglets-bloc navbar-Admin">
+        <div class="navbar-tabs-bloc navbar-Admin" {% if current_page == "admin" %} aria-current="page" {% endif %}>
             <p>Admin</p>
         </div>
     </div>
@@ -34,11 +34,11 @@
     </div>
 
     <div class="dropdown-menu">
-        <a href="#" class="navbar-onglets-bloc-crop" style="color: #3585F9">Dashboard</a>
-        <a href="#" class="navbar-onglets-bloc-crop">Alertes</a>
-        <a href="#" class="navbar-onglets-bloc-crop">Admin</a>
-        <a href="#">Informations</a>
-        <a href="#">Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </a>
+        <a href="{% url 'dashboard' %}" class="navbar-tabs-bloc-crop" {% if current_page == "dashboard" %} aria-current="page" {% endif %}>Dashboard</a>
+        <a href="#" class="navbar-tabs-bloc-crop" {% if current_page == "alerts" %} aria-current="page" {% endif %}>Alertes</a>
+        <a href="#" class="navbar-tabs-bloc-crop" {% if current_page == "admin" %} aria-current="page" {% endif %}>Admin</a>
+        <a href="#" {% if current_page == "information" %} aria-current="page" {% endif %}>Informations</a>
+        <a href="#" {% if current_page == "logout" %} aria-current="page" {% endif %}>Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </a>
     </div>
 </nav>
 

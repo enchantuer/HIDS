@@ -2,10 +2,11 @@
     --background-color: rgb(232, 230, 230);
     --primary-color: #fcfcfc;
     --on-primary-color: rgb(74, 74, 74);
-    --secondary-color: rgb(32, 32, 32);
-    --on-secondary-color: rgb(214, 214, 214);
+    --secondary-color: #f0f0f0;
+    --on-secondary-color: rgb(41, 41, 41);
 
-    --blue-color: rgb(26, 124, 239);
+    --blue-color: #3585F9/*rgb(26, 124, 239)*/;
+    --dark-blue-color: #1E5EBC;
     --red-color: rgb(241, 70, 70);
 
     font-family: 'Roboto', sans-serif;
