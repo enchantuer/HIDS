@@ -1,0 +1,43 @@
+:root {
+    --background-color: rgb(232, 230, 230);
+    --primary-color: #fcfcfc;
+    --on-primary-color: rgb(74, 74, 74);
+    --secondary-color: rgb(32, 32, 32);
+    --on-secondary-color: rgb(214, 214, 214);
+
+    --blue-color: rgb(26, 124, 239);
+    --red-color: rgb(241, 70, 70);
+
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    margin: 0;
+}
+
+.card {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    border-radius: 10px;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+}
+.card h2 {
+    font-weight: 400;
+    font-size: 1.5em;
+    margin: 0;
+}
+.align-bottom {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart {
+    width: 100% !important;
+    height: max(150px, 30vh) !important;
+}
