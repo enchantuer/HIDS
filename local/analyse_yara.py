@@ -11,7 +11,7 @@ def is_malicious(packet):
     return False
 
 # Load yara rules
-rules = yara.compile(filepath="ADD PATH TO YARA RULES FILE HERE")
+rules = yara.compile(filepath="rules/yara-rules-full.yar")
 
 # Load pcap file
 packets = rdpcap("ADD PATH TO PCAP FILE HERE")
