@@ -10,6 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script src="{% static 'dashboard/charts.js' %}" defer></script>
+    {{ chart.alert_evolution|json_script:"alert-evolution-data" }}
+    {{ chart.alert_type|json_script:"alert-type-data" }}
+    {{ chart.ia_stats|json_script:"ia-data" }}
+    {{ chart.agent_stats|json_script:"agent-data" }}
 </head>
 <body>
     <div class="grid-container">

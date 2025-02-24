@@ -3,7 +3,9 @@ Chart.register(ChartDataLabels);
 
 // Alert Type
 const alertType = document.querySelector('#alert-type-chart');
-
+const alertTypeData = JSON.parse(
+    document.querySelector('#alert-type-data').textContent
+);
 const dataAlertType = {
     labels: [
         'Brute Force',
@@ -13,7 +15,7 @@ const dataAlertType = {
     ],
     datasets: [{
         label: 'Nombre d\'alertes',
-        data: [30, 30, 10, 30],
+        data: alertTypeData,
         backgroundColor: [
             'rgb(241,39,80)',
             'rgb(19,19,32)',
@@ -61,7 +63,9 @@ new Chart(alertType, configAlertType);
 
 // Agents
 const agent = document.querySelector('#agent-chart');
-
+const agentData = JSON.parse(
+    document.querySelector('#agent-data').textContent
+)
 const dataAgent = {
     labels: [
         '1',
@@ -81,13 +85,13 @@ const dataAgent = {
     datasets: [
         {
             label: 'Nombre requetes sans alertes',
-            data: [40, 100, 45, 30, 60, 130, 39, 50, 90, 100, 34, 60, 110],
+            data: agentData.normal,
             backgroundColor: 'rgb(0,178,255)',
             stack: 'stack'
         },
         {
             label: 'Nombre d\'alertes',
-            data: [30, 30, 10, 30, 40, 119, 4, 30, 30, 10, 30, 40, 100],
+            data: agentData.alert,
             backgroundColor: 'rgb(255,0,21)',
             stack: 'stack',
             datalabels: {
@@ -167,7 +171,9 @@ new Chart(agent, configAgent);
 
 // IA stats
 const IA = document.querySelector('#ia-stats-chart');
-
+const IAData = JSON.parse(
+    document.querySelector('#ia-data').textContent
+)
 const dataIA = {
   labels: [
     'BotNet',
@@ -179,8 +185,8 @@ const dataIA = {
     'Phishing'
   ],
   datasets: [{
-    label: 'Model 1',
-    data: [65, 59, 90, 81, 56, 55, 40],
+    label: IAData[0].name,
+    data: IAData[0].data,
     fill: true,
     backgroundColor: 'rgba(255, 99, 132, 0.2)',
     borderColor: 'rgb(255, 99, 132)',
@@ -189,8 +195,8 @@ const dataIA = {
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgb(255, 99, 132)'
   }, {
-    label: 'Model 2',
-    data: [28, 48, 40, 19, 96, 27, 100],
+    label: IAData[1].name,
+    data: IAData[1].data,
     fill: true,
     backgroundColor: 'rgba(54, 162, 235, 0.2)',
     borderColor: 'rgb(54, 162, 235)',
@@ -229,63 +235,16 @@ const configIA = {
 
 new Chart(IA, configIA);
 
-/*
 // Alerts evolution
 const alertEvolution = document.querySelector('#alert-evolution-chart');
-
-const ctx = alertEvolution.getContext("2d");
-// Création du gradient
-const gradient = ctx.createLinearGradient(0, 0, 0, alertEvolution.height);
-gradient.addColorStop(0, 'rgba(255, 99, 132, 1)');  // Couleur en haut (plus intense)
-gradient.addColorStop(1, 'rgba(255, 99, 132, 0)');    // Couleur en bas (transparent)
-
+const alertEvolutionData = JSON.parse(
+    document.querySelector('#alert-evolution-data').textContent
+)
 const dataAlertEvolution = {
     labels: ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
     datasets: [{
         label: "Nombre d'alertes",
-        data: [30, 30, 10, 30, 40, 40, 30],
-        borderColor: 'red',
-        backgroundColor: gradient,
-        fill: true,
-        tension: 0.3
-    }]
-};
-
-const optionsAlertEvolution = {
-    scales: {
-        y: {
-            suggestedMin: 0,
-        }
-    },
-    plugins: {
-        legend: {
-            display: true,
-            position: 'top',
-            align: 'end',
-            labels: {
-                usePointStyle: true
-            }
-        },
-    }
-};
-
-const configAlertEvolution = {
-    type: 'line',
-    data: dataAlertEvolution,
-    options: optionsAlertEvolution
-};
-
-new Chart(alertEvolution, configAlertEvolution);*/
-
-// Sélection du canvas
-const alertEvolution = document.querySelector('#alert-evolution-chart');
-
-// Configuration des données
-const dataAlertEvolution = {
-    labels: ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
-    datasets: [{
-        label: "Nombre d'alertes",
-        data: [100, 80, 60, 90, 40, 70, 80],
+        data: alertEvolutionData,
         borderColor: 'red',  // Ligne rouge
         fill: true,
         tension: 0.3,  // Effet courbe
