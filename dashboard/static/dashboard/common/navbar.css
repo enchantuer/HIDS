@@ -1,0 +1,131 @@
+/*
+body {
+    font-family: "roboto", sans-serif;
+    background-color: lightgray;
+    margin: 0;
+    padding: 0;
+}
+*/
+nav {
+    overflow: hidden;
+    height: 60px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: auto auto 1fr  auto auto;
+    gap: 20px;
+    padding: 0 20px;
+    align-items: center;
+    width: auto;
+
+}
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+.navbar-logo img{
+    height: 40px;
+    width: auto;
+    cursor: pointer;
+}
+.navbar-logo p {
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    color: #3585F9;
+    margin: 0;
+    cursor: pointer;
+}
+.navbar-bar {
+    height: 20px;
+    width: 2px;
+    background-color: #F0F0F0;
+}
+
+.navbar-onglets {
+    display: flex;
+    gap: 10px;
+}
+.navbar-onglets-bloc{
+    color: black;
+    background-color: #f0f0f0;
+    width: 7.5rem;
+    height: 25px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: skew(-20deg);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.navbar-onglets-bloc p{
+    transform: skew(20deg);
+    align-self: center;
+    font-size: 15px;
+}
+.navbar-icon img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    align-items: center;
+}
+.navbar-burger {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 710px) {
+    .navbar-onglets-bloc {
+        display: none;
+    }
+}
+@media only screen and (min-width: 710px) {
+    .navbar-onglets-bloc-crop {
+        display: none !important;
+    }
+}
+
+/* Dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px; /* Adjust to fit below navbar */
+    right: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+    z-index: 1000;
+    padding: 5px 0;
+}
+
+ .dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 50px; /*écart entre l'icone et le texte*/
+    height: 25px;
+    padding: 5px 15px;
+    margin: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+.dropdown-menu a:active {
+    background-color: white;
+    color: #1E5EBC;
+}
+
+/* Show menu when active */
+.dropdown-active {
+    display: block;
+}

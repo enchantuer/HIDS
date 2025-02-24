@@ -1,0 +1,44 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'dashboard/common/navbar.css' %}">
+<!-- Fluent UI System Iconsby Microsoft Corporation -->
+<!-- https://icon-sets.iconify.design/fluent/?keyword=Fluent+UI+System -->
+<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<script src="{% static 'dashboard/common/navbar.js' %}" defer></script>
+
+<nav>
+    <div class="navbar-logo">
+        <img src="{% static 'dashboard/images/logo.png' %}" alt="Logo">
+        <p>TELOCA AI</p>
+    </div>
+    <div class="navbar-bar">  </div>
+    <div class="navbar-onglets">
+        <div class="navbar-onglets-bloc navbar-Dashboard" style="background-color: #3585F9; color: white;">
+            <p>Dashboard</p>
+        </div>
+        <div class="navbar-onglets-bloc navbar-Alertes">
+            <p>Alertes</p>
+        </div>
+        <div class="navbar-onglets-bloc navbar-Admin">
+            <p>Admin</p>
+        </div>
+    </div>
+    <div class="navbar-icon">
+        <img src="{% static 'dashboard/images/photo-profile.jpg' %}" alt="photo-profile">
+
+    </div>
+    <div class="navbar-burger">
+        <iconify-icon icon="fluent:line-horizontal-3-16-filled" width="35" height="35"></iconify-icon>
+    </div>
+
+    <div class="dropdown-menu">
+        <a href="#" class="navbar-onglets-bloc-crop" style="color: #3585F9">Dashboard</a>
+        <a href="#" class="navbar-onglets-bloc-crop">Alertes</a>
+        <a href="#" class="navbar-onglets-bloc-crop">Admin</a>
+        <a href="#">Informations</a>
+        <a href="#">Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </a>
+    </div>
+</nav>
+
