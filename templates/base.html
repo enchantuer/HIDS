@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}HIDS{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <!-- Fluent UI System Iconsby Microsoft Corporation -->
+    <!-- https://icon-sets.iconify.design/fluent/?keyword=Fluent+UI+System -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+
+    {% block header %}{% endblock %}
+</head>
+<body>
+    {% include "includes/navbar.html"%}
+    {% block content %}{% endblock %}
+</body>
+</html>
