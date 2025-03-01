@@ -5,7 +5,7 @@
     --secondary-color: #f0f0f0;
     --on-secondary-color: rgb(41, 41, 41);
 
-    --blue-color: #3585F9/*rgb(26, 124, 239)*/;
+    --blue-color: #3585F9;
     --dark-blue-color: #1E5EBC;
     --red-color: rgb(241, 70, 70);
 
@@ -31,7 +31,7 @@ body {
     font-size: 1.5em;
     margin: 0;
 }
-.align-bottom {
+.align-bottom-card {
     flex-grow: 1;
     display: flex;
     align-items: center;

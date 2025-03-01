@@ -1,12 +1,10 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{% static 'dashboard/common/common.css' %}">
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
     <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script src="{% static 'dashboard/charts.js' %}" defer></script>
@@ -14,9 +12,9 @@
     {{ chart.alert_type|json_script:"alert-type-data" }}
     {{ chart.ia_stats|json_script:"ia-data" }}
     {{ chart.agent_stats|json_script:"agent-data" }}
-</head>
-<body>
-    {% include "dashboard/navbar.html" with current_page='dashboard' %}
+{% endblock %}
+
+{% block content %}
     <div class="grid-container">
         <div class="card" id="summary">
             <div class="stats">
@@ -35,28 +33,28 @@
         <div class="card" id="alert-evolution">
             <h2>Evolution des alertes</h2>
             <hr>
-            <div class="align-bottom">
+            <div class="align-bottom-card">
                 <canvas class="chart" id="alert-evolution-chart"></canvas>
             </div>
         </div>
         <div class="card" id="alert-type">
             <h2>Types d'attaques</h2>
             <hr>
-            <div class="align-bottom">
+            <div class="align-bottom-card">
                 <canvas class="chart" id="alert-type-chart"></canvas>
             </div>
         </div>
         <div class="card" id="ia-stats">
             <h2>IA</h2>
             <hr>
-            <div class="align-bottom">
+            <div class="align-bottom-card">
                 <canvas class="chart" id="ia-stats-chart"></canvas>
             </div>
         </div>
         <div class="card" id="agent-stats">
             <h2>Agents Principaux</h2>
             <hr>
-            <div class="align-bottom">
+            <div class="align-bottom-card">
                 <canvas class="chart" id="agent-chart"></canvas>
             </div>
         </div>
@@ -90,5 +88,4 @@
             </table>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
