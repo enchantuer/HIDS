@@ -42,3 +42,7 @@ body {
     width: 100% !important;
     height: max(150px, 30vh) !important;
 }
+
+.align-left {
+    text-align: left;
+}

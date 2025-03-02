@@ -7,15 +7,10 @@ const alertTypeData = JSON.parse(
     document.querySelector('#alert-type-data').textContent
 );
 const dataAlertType = {
-    labels: [
-        'Brute Force',
-        'SSH',
-        'DDOS',
-        'BotNet'
-    ],
+    labels: alertTypeData[0],
     datasets: [{
         label: 'Nombre d\'alertes',
-        data: alertTypeData,
+        data: alertTypeData[1],
         backgroundColor: [
             'rgb(241,39,80)',
             'rgb(19,19,32)',
@@ -67,31 +62,17 @@ const agentData = JSON.parse(
     document.querySelector('#agent-data').textContent
 )
 const dataAgent = {
-    labels: [
-        '1',
-        '10',
-        '11',
-        '4',
-        '10',
-        '44',
-        '50',
-        '1',
-        '10',
-        '11',
-        '4',
-        '10',
-        '44'
-    ],
+    labels: agentData[0],
     datasets: [
         {
             label: 'Nombre requetes sans alertes',
-            data: agentData.normal,
+            data: agentData[1].request_without_alert_per_agent,
             backgroundColor: 'rgb(0,178,255)',
             stack: 'stack'
         },
         {
             label: 'Nombre d\'alertes',
-            data: agentData.alert,
+            data: agentData[1].alert_per_agent,
             backgroundColor: 'rgb(255,0,21)',
             stack: 'stack',
             datalabels: {
@@ -145,6 +126,8 @@ const optionsAgent = {
             labels: {
                 percent: {
                     formatter: (value, ctx) => {
+                        if(value === 0) return "";
+
                         const dataset = ctx.chart.data.datasets;
                         const dataIndex = ctx.dataIndex;
 
@@ -240,11 +223,13 @@ const alertEvolution = document.querySelector('#alert-evolution-chart');
 const alertEvolutionData = JSON.parse(
     document.querySelector('#alert-evolution-data').textContent
 )
+const labels = alertEvolutionData[0].map(hour => new Date(hour).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+console.log(labels)
 const dataAlertEvolution = {
-    labels: ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+    labels: labels,
     datasets: [{
         label: "Nombre d'alertes",
-        data: alertEvolutionData,
+        data: alertEvolutionData[1],
         borderColor: 'red',  // Ligne rouge
         fill: true,
         tension: 0.3,  // Effet courbe
@@ -270,7 +255,7 @@ const optionsAlertEvolution = {
                 drawBorder: false
             },
             suggestedMin: 0,
-            suggestedMax: 200
+            suggestedMax: 10
         }
     },
     plugins: {
@@ -293,12 +278,19 @@ new Chart(alertEvolution, {
     plugins: [{
         id: 'customGradient',
         beforeDraw: (chartInstance) => {
+            const max = Math.max(...dataAlertEvolution.datasets[0].data)
+            const min = Math.min(...dataAlertEvolution.datasets[0].data)
+
+            if(max === 0) {
+                return;
+            }
+
             const ctx = chartInstance.ctx;
             const chartArea = chartInstance.chartArea;
             // Trouver la hauteur dynamique du plus haut et plus bas point de la courbe
             const yAxis = chartInstance.scales.y;
-            const topY = yAxis.getPixelForValue(Math.max(...dataAlertEvolution.datasets[0].data)); // Point le plus haut
-            const bottomY = yAxis.getPixelForValue(Math.min(...dataAlertEvolution.datasets[0].data)); // Point le plus haut
+            const topY = yAxis.getPixelForValue(max); // Point le plus haut
+            const bottomY = yAxis.getPixelForValue(min); // Point le plus haut
             const stopPosition = (bottomY - topY) / (chartArea.bottom - topY);
             // Créer un gradient ajusté à la courbe
             const gradient = ctx.createLinearGradient(0, topY, 0, chartArea.bottom);
