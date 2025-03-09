@@ -41,20 +41,21 @@
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
+    margin-left: 1.5em;
 }
 td {
     text-align: center;
 }
 thead {
     color: dodgerblue;
-    border-bottom: 2px solid lightgray;
+}
+th {
+    padding-bottom: 10px;
 }
 
 hr {
     background-color: var(--on-primary-color);
     height: 1px;
     border: 0;
-    width: 98%
+    margin-inline: 0.5em;
 }

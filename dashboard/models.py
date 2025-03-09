@@ -11,7 +11,7 @@ class Agent(models.Model):
         return self.name
 
 class Alert(models.Model):
-    time = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     source = models.CharField(max_length=50)
     type = models.CharField(max_length=20)
@@ -21,3 +21,11 @@ class Alert(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class LogNbRequest(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    nbRequests = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.agent.name} : {self.nbRequests} requests'
