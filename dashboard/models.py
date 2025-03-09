@@ -26,3 +26,6 @@ class LogNbRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     nbRequests = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.agent.name} : {self.nbRequests} requests'
