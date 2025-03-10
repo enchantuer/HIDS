@@ -46,6 +46,7 @@ nav {
 .navbar-tabs-bloc {
     color: var(--on-secondary-color);
     background-color: var(--secondary-color);
+    text-decoration: none;
     width: 7.5rem;
     height: 2rem; /* 25px -> 2rem */
     border-radius: 5px;
