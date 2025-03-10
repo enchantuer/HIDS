@@ -8,6 +8,7 @@
     flex-direction: row;
     gap: inherit;
     align-items: stretch;
+    flex-wrap: wrap;
 }
 
 .field,
@@ -19,6 +20,12 @@ button:not(.field button) {
     padding-inline: 5px;
     align-items: center;
 }
+.field {
+    background-color: var(--secondary-color);
+}
+/*button:not(.field button) {
+    background-color: var(--primary-color);
+}*/
 
 .field input {
     flex-grow: 1;
@@ -33,7 +40,8 @@ button:not(.field button) {
     align-items: center;
     padding-block: 5px;
 }
-.field iconify-icon {
+.field iconify-icon,
+button iconify-icon {
     font-size: 1.5em;
 }
 
@@ -109,8 +117,13 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: var(--dark-blue-color);
 }
-button[type="submit"]:active,
+
 button:not(.field button):active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+
+.inverted {
     background-color: var(--primary-color);
     color: var(--on-primary-color);
 }
