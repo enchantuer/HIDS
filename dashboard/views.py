@@ -7,9 +7,15 @@ from dashboard.models import Alert, Agent, LogNbRequest
 from django.db.models.functions import TruncHour
 from django.db.models import Count, Sum
 from django.utils.timezone import now, timedelta
+from dashboard.models import Alert, Agent
+from django.contrib.auth.decorators import login_required
 
+from django.urls import reverse_lazy
 
 # Create your views here.
+
+
+@login_required(login_url=reverse_lazy("login"))
 # TODO : Use user timezone to send time / date
 def index(request):
     # Count the number of alert per hour for the last 7 hours
@@ -109,3 +115,5 @@ def index(request):
         }
     }
     return render(request, "dashboard/index.html", context)
+
+

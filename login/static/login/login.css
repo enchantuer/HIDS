@@ -1,0 +1,114 @@
+body{
+    background-color: white;
+
+}
+.connexion-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 20rem 1fr;
+    grid-template-rows: 5rem 20rem 1fr;
+
+}
+
+.connexion-card {
+    width: 100%;
+    grid-area: 2 / 2;
+    color: var(--on-primary-color);
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.connexion-logo{
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
+.connexion-logo img{
+    width: 65%;
+    margin-top: 50px;
+}
+.connexion-logo p{
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2rem; /* 15px -> 1rem */
+    color: var(--blue-color);
+    cursor: pointer;
+    margin: 0 0 25px 0;
+}
+.connexion-form{
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    border-radius: 10px;
+    padding: 10%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.connexion-form p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+}
+.connexion-form-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.connexion-form-input p{
+    font-size: 1em;
+    margin-bottom: 0.2rem;
+}
+
+.connexion-form-input .password_input_container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+}
+.connexion-form-input .password_input_container input{
+    border-radius: 7.5px;
+    border: 1px solid var(--on-secondary-color);
+    height: 1.7rem;
+    width: 100%;
+
+}
+.connexion-form-input button{
+    background-color: transparent;
+    border: none;
+    position: absolute;
+
+}
+.connexion-form-input .password_input_container button iconify-icon{
+    transform: translateX(1280%) translateY(30%);
+    cursor: pointer;
+}
+
+.connexion-form-submit{
+    background-color: var(--blue-color);
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    border-radius: 10px;
+    height: 2rem;
+    margin: 10px 2rem 0 2rem;
+    border: none;
+    color : white;
+    cursor: pointer;
+    font-size: 1em;
+}
+.connexion-form-submit:hover {
+    background-color: var(--dark-blue-color);
+}
+.connexion-form-submit:active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+.connexion-card .wrong-form{
+    color: #dc0000;
+}
