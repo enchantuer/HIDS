@@ -1,0 +1,1 @@
+Protocol,Fwd Packet Length Max,Fwd Packet Length Min,Fwd Packet Length Mean,Fwd Packet Length Std,Bwd Packet Length Min,Flow IAT Mean,Flow IAT Std,Flow IAT Min,Fwd IAT Mean,Fwd IAT Std,Fwd IAT Min,Bwd IAT Total,Bwd IAT Max,Packet Length Min,Packet Length Mean,RST Flag Count,ACK Flag Count,ECE Flag Count,Avg Packet Size,Avg Fwd Segment Size,Init Bwd Win Bytes,Fwd Seg Size Min
