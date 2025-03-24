@@ -12,9 +12,7 @@ def analyse_pcap_with_suricata(pcap_path):
 
     :param pcap_path : the path to the pcap file who needed to be analysed.
     """
-    rules_file = "suricata_rules_optimized.json"
-    #rules_file = "suricata_rules.json"
-    #rules_file = "suricata_rules_filtered.json"
+    rules_file = "local/rules/suricata_rules_optimized.json"
     with open(rules_file, "r", encoding="utf-8") as f:
         rules = json.load(f)
 
@@ -90,7 +88,4 @@ def analyse_pcap_with_suricata(pcap_path):
             return False
 
 
-#analyse_pcap_with_suricata("../Téléchargements/Extrait_zbot/zbot_1.pcap")
-#analyse_pcap_with_suricata("../Téléchargements/malveillant.pcap")
-#sanalyse_pcap_with_suricata("Captures/1_2100.pcap")
 
