@@ -1,73 +1,72 @@
-import os
 import yara
-from scapy.all import rdpcap, wrpcap, Raw
+from scapy.all import rdpcap, TCP, UDP, wrpcap, Raw
 
-# Global variables
-MACHINE_NUMBER = 1
-ALERT_COUNTER_FILE = "counter/yara_alert_counter.txt"
-MALICIOUS_FOLDER = "malicious"
-PCAP_DIRECTORY = "pcap"
-YARA_RULES_FILE = "Rules/yara-rules-full.yar"
+def extract_payload(pkt):
+    """
+    Extracts payload (payload) from a packet by checking multiple layers (Raw, TCP, UDP).
+    :param pkt: The Scapy packet.
+    :return: Payload in bytes or None if there is no payload.
+    """
+    # Checks the raw layer
+    if pkt.haslayer(Raw):
+        return bytes(pkt[Raw].load)
 
-# Load the alert counter
-if os.path.exists(ALERT_COUNTER_FILE):
-    with open(ALERT_COUNTER_FILE, "r") as f:
-        ALERT_COUNTER = int(f.read().strip())
-else:
-    ALERT_COUNTER = 1
+    # Checks payload in TCP or UDP layers
+    elif pkt.haslayer(TCP) and pkt[TCP].payload:
+        return bytes(pkt[TCP].payload)
 
-# Load YARA rules
-if os.path.exists(YARA_RULES_FILE):
-    rules = yara.compile(filepath=YARA_RULES_FILE)
-else:
-    print(f"Error: YARA rules file {YARA_RULES_FILE} not found.")
-    exit()
+    elif pkt.haslayer(UDP) and pkt[UDP].payload:
+        return bytes(pkt[UDP].payload)
 
-# Function to check if a packet is malicious
-def is_malicious(packet):
-    if packet.haslayer(Raw):
-        payload = bytes(packet[Raw].load)
-        matches = rules.match(data=payload)
-        if matches:
-            return [match.rule for match in matches]
-    return []
+    return None
 
-# Function to analyse PCAP files
-def analyse_pcap(pcap_path):
-    global ALERT_COUNTER
-    packets = rdpcap(pcap_path)
-    malicious_packets = []
 
+def analyse_pcap_with_yara(pcap_path, yara_rules_path):
+    """
+    Scans a PCAP file with YARA rules and returns the detected alerts.
+    :param pcap_path: Path of the PCAP file to be analyzed.
+    :param yara_rules_path: Path to the file containing the YARA rules.
+    :return: Tuple (alert name, package summary) if an alert is detected, otherwise None.
+    """
+    try:
+        # Load the YARA rules
+        rules = yara.compile(filepath=yara_rules_path)
+    except yara.SyntaxError as e:
+        print(f"Error of syntax in YARA rules : {e}")
+        return None
+
+    try:
+        # Load the PCAP file
+        packets = rdpcap(pcap_path)
+        if len(packets) == 0:
+            print("The PCAP file is empty.")
+            return None
+    except Exception as e:
+        print(f"Error in the reading of the PCAP file : {e}")
+        return None
+
+    # Browse each package and extract the payload
     for pkt in packets:
-        matched_rules = is_malicious(pkt)
-        if matched_rules:
-            malicious_packets.append((pkt, matched_rules[0]))  # Only save the first rule
+        payload = extract_payload(pkt)
+        
+        if payload:
+            # Application of YARA rules on the payload
+            matches = rules.match(data=payload)
 
-    if malicious_packets:
-        if not os.path.exists(MALICIOUS_FOLDER):
-            os.makedirs(MALICIOUS_FOLDER)
+            if matches:
+                for match in matches:
+                    alert_name = match.rule
+                    packet_summary = pkt.summary()
 
-        for pkt, rule_name in malicious_packets:
-            attack_name = rule_name.replace(" ", "_")
-            new_filename = f"{MACHINE_NUMBER}_{ALERT_COUNTER}_yara_{attack_name}.pcap"
-            wrpcap(os.path.join(MALICIOUS_FOLDER, new_filename), [pkt])
-            ALERT_COUNTER += 1
+                    # Print the alert
+                    print(f"\n ALERT : {alert_name}")
+                    print(f" - Package in question : {packet_summary}")
+                    return alert_name
+    return None
 
-        with open(ALERT_COUNTER_FILE, "w") as f:
-            f.write(str(ALERT_COUNTER))
 
-        return True
-    return False
-
-# Scan all PCAP files in the directory
-if os.path.exists(PCAP_DIRECTORY):
-    for pcap_file in os.listdir(PCAP_DIRECTORY):
-        if pcap_file.endswith(".pcap"):
-            pcap_path = os.path.join(PCAP_DIRECTORY, pcap_file)
-            if analyse_pcap(pcap_path):
-                print(f"File {pcap_file} detected as malicious and saved.")
-            else:
-                print(f"File {pcap_file} not detected as malicious.")
-else:
-    print(f"Error: PCAP directory {PCAP_DIRECTORY} not found.")
-    exit()
+"""
+pcap_file = "../Téléchargements/Extrait/ext_7.pcap"
+yara_rules_file = "Rules/yara-rules-full.yar"
+analyse_pcap_with_yara(pcap_file, yara_rules_file)
+"""
