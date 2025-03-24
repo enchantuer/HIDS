@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'alerts.apps.AlertsConfig',
     'api.apps.ApiConfig'
+    'dashboard.apps.DashboardConfig',
+    'login.apps.ConnectionConfig'
 ]
 
 MIDDLEWARE = [
@@ -135,6 +137,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Login redirection
+LOGIN_REDIRECT_URL = '/dashboard/'  # L'utilisateur sera redirigé vers cette URL après la connexion
+LOGOUT_REDIRECT_URL = '/login/'  # Après la déconnexion, il sera redirigé ici
 
 # Daphne
 ASGI_APPLICATION = "HIDS.asgi.application"
