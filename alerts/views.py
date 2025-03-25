@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from dashboard.models import Alert
+from api.models import Alert
 
 
 # Create your views here.

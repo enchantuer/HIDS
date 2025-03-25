@@ -11,15 +11,15 @@
     <form class="card search" action="#">
         <div class="field">
             <label for="search"><iconify-icon icon="fluent:search-32-filled"></iconify-icon></label>
-            <input class="field-input" name="search" id="search" type="text" placeholder="Rechercher ...">
+            <input class="field-input" name="type" id="search" type="text" placeholder="Rechercher ...">
         </div>
         <div class="field">
 {#            <label for="start-date"><iconify-icon icon="fluent:calendar-32-filled"></iconify-icon></label>#}
-            <input class="field-input" name="start-date" id="start-date" type="datetime-local" placeholder="Début">
+            <input class="field-input" name="start_date" id="start-date" type="datetime-local" placeholder="Début">
         </div>
         <div class="field">
 {#            <label for="start-date"><iconify-icon icon="fluent:calendar-32-filled"></iconify-icon></label>#}
-            <input class="field-input" name="end-date" id="end-date" type="datetime-local" placeholder="Fin">
+            <input class="field-input" name="end_date" id="end-date" type="datetime-local" placeholder="Fin">
         </div>
 
         <div class="field dropdown">
@@ -30,30 +30,30 @@
             <div class="dropdown-content">
                 <div class="dropdown-category">Local</div>
                 <label for="yara">Yara</label>
-                <input type="checkbox" name="verification" id="yara" value="yara">
+                <input type="checkbox" name="source" id="yara" value="yara">
                 <br>
                 <label for="suricate">Suricate</label>
-                <input type="checkbox" name="verification" id="suricate" value="suricate">
+                <input type="checkbox" name="source" id="suricate" value="suricate">
                 <br>
                 <label for="snort">Snort</label>
-                <input type="checkbox" name="verification" id="snort" value="snort">
+                <input type="checkbox" name="source" id="snort" value="snort">
                 <br>
                 <label for="custom">Custom</label>
-                <input type="checkbox" name="verification" id="custom" value="custom">
+                <input type="checkbox" name="source" id="custom" value="custom">
 
                 <div class="dropdown-category">Cloud</div>
                 <label for="virus-total">Virus Total</label>
-                <input type="checkbox" name="verification" id="virus-total" value="virus-total">
+                <input type="checkbox" name="source" id="virus-total" value="virus-total">
                 <label for="IPDB">IPDB</label>
-                <input type="checkbox" name="verification" id="IPDB" value="IPDB">
+                <input type="checkbox" name="source" id="IPDB" value="IPDB">
                 <label for="OPE">OPE</label>
-                <input type="checkbox" name="verification" id="OPE" value="OPE">
+                <input type="checkbox" name="source" id="OPE" value="OPE">
 
                 <div class="dropdown-category">IA</div>
                 <label for="IA-1">IA 1</label>
-                <input type="checkbox" name="verification" id="IA-1" value="IA-1">
+                <input type="checkbox" name="source" id="IA-1" value="IA-1">
                 <label for="IA-2">IA 2</label>
-                <input type="checkbox" name="verification" id="IA-2" value="IA-2">
+                <input type="checkbox" name="source" id="IA-2" value="IA-2">
             </div>
         </div>
 
@@ -92,18 +92,6 @@
             </tr>
             </thead>
             <tbody>
-            {% for alert in alerts %}
-                <tr>
-                    <td class="align-left">{{ alert.created_at }}</td>
-                    <td>{{ alert.agent.id }}</td>
-                    <td>{{ alert.agent.name }}</td>
-                    <td>{{ alert.source }}</td>
-                    <td>{{ alert.type }}</td>
-                    <td>{{ alert.description }}</td>
-                    <td>{{ alert.level }}</td>
-                    <td>{{ alert.id }}</td>
-                </tr>
-            {% endfor %}
             </tbody>
         </table>
     </div>
