@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from django.shortcuts import render
 
-from dashboard.models import Alert, Agent, LogNbRequest
+from api.models import Alert, Agent, LogNbRequest
 
 from django.db.models.functions import TruncHour
 from django.db.models import Count, Sum

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'alerts/style.css' %}">
+    <script src="{% static 'alerts/script.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+    <form class="card search" action="#">
+        <div class="field">
+            <label for="search"><iconify-icon icon="fluent:search-32-filled"></iconify-icon></label>
+            <input class="field-input" name="type" id="search" type="text" placeholder="Rechercher ...">
+        </div>
+        <div class="field">
+            <input class="field-input" name="start_date" id="start-date" type="datetime-local" placeholder="Début">
+        </div>
+        <div class="field">
+            <input class="field-input" name="end_date" id="end-date" type="datetime-local" placeholder="Fin">
+        </div>
+
+        <div class="field dropdown">
+            <button class="dropdown-button">
+                Vérification
+                <iconify-icon icon="fluent:chevron-down-32-filled"></iconify-icon>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-category">Local</div>
+                <label for="yara">Yara</label>
+                <input type="checkbox" name="source" id="yara" value="yara">
+                <br>
+                <label for="suricate">Suricate</label>
+                <input type="checkbox" name="source" id="suricate" value="suricate">
+                <br>
+                <label for="snort">Snort</label>
+                <input type="checkbox" name="source" id="snort" value="snort">
+                <br>
+                <label for="custom">Custom</label>
+                <input type="checkbox" name="source" id="custom" value="custom">
+
+                <div class="dropdown-category">Cloud</div>
+                <label for="virus-total">Virus Total</label>
+                <input type="checkbox" name="source" id="virus-total" value="virus-total">
+                <label for="IPDB">IPDB</label>
+                <input type="checkbox" name="source" id="IPDB" value="IPDB">
+                <label for="OPE">OPE</label>
+                <input type="checkbox" name="source" id="OPE" value="OPE">
+
+                <div class="dropdown-category">IA</div>
+                <label for="IA-1">IA 1</label>
+                <input type="checkbox" name="source" id="IA-1" value="IA-1">
+                <label for="IA-2">IA 2</label>
+                <input type="checkbox" name="source" id="IA-2" value="IA-2">
+            </div>
+        </div>
+
+        <button type="submit">
+            <iconify-icon icon="fluent:checkmark-32-regular" width="32" height="32"></iconify-icon>
+        </button>
+
+        <button type="button" class="align-right inverted">
+            <iconify-icon icon="fluent:document-text-32-regular"></iconify-icon> Générer un rapport
+        </button>
+    </form>
+
+    <div class="card" id="alerts">
+        <h2>Alertes</h2>
+        <hr>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="align-left" scope="col">Time</th>
+                <th scope="col">Agent</th>
+                <th scope="col">Agent Name</th>
+                <th scope="col">Detection</th>
+                <th scope="col">Tactic</th>
+                <th scope="col">Description</th>
+                <th scope="col">Level</th>
+                <th scope="col">ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,9 +1,8 @@
-.grid-container {
+.container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    gap: 20px;
-    margin: 20px;
 }
+
 #summary {
     grid-column-end: span 3;
     display: flex;
@@ -38,24 +37,4 @@
 .stats {
     padding-inline: clamp(20px, 5%, 100px);
     text-align: center;
-}
-
-table {
-    margin-left: 1.5em;
-}
-td {
-    text-align: center;
-}
-thead {
-    color: dodgerblue;
-}
-th {
-    padding-bottom: 10px;
-}
-
-hr {
-    background-color: var(--on-primary-color);
-    height: 1px;
-    border: 0;
-    margin-inline: 0.5em;
 }

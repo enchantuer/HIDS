@@ -7,15 +7,15 @@
         </div>
         <div class="navbar-bar">  </div>
         <div class="navbar-tabs">
-            <div class="navbar-tabs-bloc navbar-Dashboard" {% if active_page == "dashboard" %} aria-current="page" {% endif %}>
+            <a href="{% url 'dashboard' %}" class="navbar-tabs-bloc" {% if active_page == "dashboard" %} aria-current="page" {% endif %}>
                 <p>Dashboard</p>
-            </div>
-            <div class="navbar-tabs-bloc navbar-Alertes" {% if active_page == "alerts" %} aria-current="page" {% endif %}>
+            </a>
+            <a href="{% url 'alerts' %}" class="navbar-tabs-bloc" {% if active_page == "alerts" %} aria-current="page" {% endif %}>
                 <p>Alertes</p>
-            </div>
-            <div class="navbar-tabs-bloc navbar-Admin" {% if active_page == "admin" %} aria-current="page" {% endif %}>
+            </a>
+            <a href="#" class="navbar-tabs-bloc" {% if active_page == "admin" %} aria-current="page" {% endif %}>
                 <p>Admin</p>
-            </div>
+            </a>
         </div>
         <div class="navbar-icon">
             <img src="{% static 'images/photo-profile.jpg' %}" alt="photo-profile">
@@ -27,7 +27,7 @@
 
         <div class="dropdown-menu">
             <a href="{% url 'dashboard' %}" class="navbar-tabs-bloc-crop" {% if active_page == "dashboard" %} aria-current="page" {% endif %}>Dashboard</a>
-            <a href="#" class="navbar-tabs-bloc-crop" {% if active_page == "alerts" %} aria-current="page" {% endif %}>Alertes</a>
+            <a href="{% url 'alerts' %}" class="navbar-tabs-bloc-crop" {% if active_page == "alerts" %} aria-current="page" {% endif %}>Alertes</a>
             <a href="#" class="navbar-tabs-bloc-crop" {% if active_page == "admin" %} aria-current="page" {% endif %}>Admin</a>
             <a href="#" {% if active_page == "information" %} aria-current="page" {% endif %}>Informations</a>
             <a href="#" {% if active_page == "logout" %} aria-current="page" {% endif %}>Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </a>

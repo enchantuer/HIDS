@@ -17,6 +17,11 @@ body {
     margin: 0;
 }
 
+.container {
+    gap: 20px;
+    margin: 20px;
+}
+
 .card {
     background-color: var(--primary-color);
     color: var(--on-primary-color);
@@ -43,6 +48,26 @@ body {
     height: max(150px, 30vh) !important;
 }
 
+hr {
+    background-color: var(--on-primary-color);
+    height: 1px;
+    border: 0;
+    margin-inline: 0.5em;
+}
+
+.table {
+    margin-left: 1.5em;
+}
+.table td {
+    text-align: center;
+}
+.table thead {
+    color: dodgerblue;
+}
+.table th {
+    padding-bottom: 10px;
+}
+
 .align-left {
-    text-align: left;
+    text-align: left !important;
 }
