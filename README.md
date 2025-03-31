@@ -34,17 +34,41 @@ Le serveur **centralise et affiche les alertes** grâce à une **interface graph
 
 1. **Cloner le projet**  
    ```bash
-   git clone https://github.com/enchantuer/HIDS
-   cd hids-hybride
+   git clone -b docker-compose --single-branch https://github.com/enchantuer/HIDS
+   cd HIDS
    ```
-
-2. **Lancer avec Docker**  
+2. **Mise en place des variables d'environnement**
+   Renomer le fichier `hidden.env` en `.env`
    ```bash
-   docker-compose up -d
+   mv hidden.env .env
+   ```
+   Puis changer les variable d'environnement dans le fichier selon vos préférence
+   * Il est fortement conseiller de changer la clé secret django : `DJANGO_SECRET_KEY`
+   * Afin de pouvoir acceder au site depuis l'exterieur de la machine, il faut ajouter les ip hotes utiliser pour se connecter au site dans `DJANGO_ALLOWED_HOSTS` en les séparent d'une virgule (`,`)
+
+4. **Lancer avec Docker**  
+   ```bash
+   docker compose up
    ```
 
-3. **Accéder à l’interface**  
-   Ouvrir un navigateur et aller sur :  
+5. **Premier lancement / Mise à jour**
+   Lors du premier lancement ou des mise à jour, il est important d'effectuer les migration afin de créer les tables dans la base de données.
+   ```bash
+   docker compose exec -it django_app python manage.py migrate
    ```
-   http://localhost:8080
+   
+   Si vous souhaiter créer un utilisateur premier utilisateur administrateur, utiliser la commande suivant :
+   ```bash
+   docker compose exec -it django_app python manage.py createsuperuser
+   ```
+
+4. **Accéder à l’interface**  
+   Ouvrir un navigateur et aller sur :
+   ```
+   http://localhost:8000/dashboard
+   ```
+
+   Pour le pannel administrateur :  
+   ```
+   http://localhost:8000/admin
    ```
