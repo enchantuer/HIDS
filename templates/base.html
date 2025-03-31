@@ -16,7 +16,9 @@
     {% block header %}{% endblock %}
 </head>
 <body>
-    {% include "includes/navbar.html"%}
+    {% if show_navbar|default_if_none:True %}
+        {% include "includes/navbar.html"%}
+    {% endif %}
     <div class="container">
         {% block content %}{% endblock %}
     </div>
