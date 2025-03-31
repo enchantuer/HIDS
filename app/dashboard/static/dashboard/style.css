@@ -1,0 +1,40 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+#summary {
+    grid-column-end: span 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+#alert-evolution {
+    grid-column-end: span 2;
+}
+#alert-type {
+    grid-column-end: span 1;
+}
+#ia-stats {
+    grid-column-end: span 1;
+}
+#agent-stats {
+    grid-column-end: span 2;
+}
+#alerts {
+    grid-column-end: span 3;
+}
+
+.stats > span {
+    font-size: xxx-large;
+    font-weight: bold;
+    color: var(--red-color);
+}
+#summary .stats:nth-child(2) span {
+    color: var(--blue-color)
+}
+.stats {
+    padding-inline: clamp(20px, 5%, 100px);
+    text-align: center;
+}
