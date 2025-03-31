@@ -11,7 +11,10 @@ import retrieve_requests
 import local.analyse_suricata as analyse_suricata
 import local.analyse_yara as analyse_yara
 import local.analyse_snort as analyse_snort
+import online.analyse_VT as analyse_VT
+import online.analyse_AbuseIPDB as analyse_AbuseIPDB
 
+from config import LOCAL, ONLINE, IA
 
 # Configuration
 ID_ALERT_FILE = "id_alert.txt"  
@@ -95,59 +98,90 @@ if __name__ == '__main__':
 
 
     #-----LOCAL AUDIT------
-        #---Yara---
-        yara_rules_file = "local/rules/yara-rules-full.yar"
-        alert_yara = analyse_yara.analyse_pcap_with_yara(filename,yara_rules_file)
+        if LOCAL == True:
+            #---Yara---
+            yara_rules_file = "local/rules/yara-rules-full.yar"
+            alert_yara = analyse_yara.analyse_pcap_with_yara(filename,yara_rules_file)
 
-        if alert_yara != False and alert_yara != None:
-            #Rename the PCAP file
-            new_filename = rename_pcap(alert_yara, "local_yara", filename)
+            if alert_yara != False and alert_yara != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_yara, "local_yara", filename)
 
-            #Send the file to the server and save it in the directory
-            #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
-            shutil.move(new_filename,save_dir_alert)
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                shutil.move(new_filename,save_dir_alert)
 
-            flag = True
-            print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-            continue
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
 
-        #---Snort---
-        rules = analyse_snort.load_snort_rules("local/rules/snort3-community.rules")
-        alert_snort = analyse_snort.analyse_pcap_with_snort(filename, rules)
+            #---Snort---
+            rules = analyse_snort.load_snort_rules("local/rules/snort3-community.rules")
+            alert_snort = analyse_snort.analyse_pcap_with_snort(filename, rules)
 
-        if alert_snort != False and alert_snort != None:
-            #Rename the PCAP file
-            new_filename = rename_pcap(alert_snort, "local_snort", filename)
+            if alert_snort != False and alert_snort != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_snort, "local_snort", filename)
 
-            #Send the file to the server and save it in the directory
-            #subprocess.run(["sudo","python3", "communication_client.py", new_filename])    
-            shutil.move(new_filename,save_dir_alert)
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])    
+                shutil.move(new_filename,save_dir_alert)
 
-            flag = True
-            print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-            continue
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
 
-        #---Suricata--- 
-        alert_suricata = analyse_suricata.analyse_pcap_with_suricata(filename)
+            #---Suricata--- 
+            alert_suricata = analyse_suricata.analyse_pcap_with_suricata(filename)
 
-        if alert_suricata != False and alert_suricata != None:
-            #Rename the PCAP file
-            new_filename = rename_pcap(alert_suricata, "local_suricata", filename)
+            if alert_suricata != False and alert_suricata != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_suricata, "local_suricata", filename)
 
-            #Send the file to the server and save it in the directory
-            #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
-            shutil.move(new_filename,save_dir_alert)
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                shutil.move(new_filename,save_dir_alert)
 
-            flag = True
-            print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-            continue
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
             
 
-
     #-----ONLINE AUDIT------
-        
-        
+        if ONLINE == True:
+            #---VirusTotal---
+            alert_VT = analyse_VT.analyse_pcap_with_VT(filename)
+
+            if alert_VT != False and alert_VT != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_VT, "online_virustotal", filename)
+
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                shutil.move(new_filename,save_dir_alert)
+
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
+            
+            #---AbuseIPDB---
+            alert_abuse = analyse_AbuseIPDB.analyse_pcap_with_abuseIPDB(filename)
+
+            if alert_abuse != False and alert_abuse != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_abuse, "online_abuseIPDB", filename)
+
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                shutil.move(new_filename,save_dir_alert)
+
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
+
     #-----IA AUDIT-----
+        #if IA == True:
+
 
 
     #If no alert detected
