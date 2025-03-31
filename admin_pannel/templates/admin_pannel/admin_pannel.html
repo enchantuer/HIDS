@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Acceuil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    {{ chart.alert_evolution|json_script:"alert-evolution-data" }}
+    {{ chart.alert_type|json_script:"alert-type-data" }}
+    {{ chart.ia_stats|json_script:"ia-data" }}
+    {{ chart.agent_stats|json_script:"agent-data" }}
+    <script src="{% static 'dashboard/charts.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="parent">
+    <div class="navbar-admin">
+        <div class="navbar-admin-tabs">
+            <div class="navbar-admin-tabs-bloc navbar-admin-home" {% if active_page == "dashboard" %} aria-current="page" {% endif %}>
+                <p> <iconify-icon icon="fluent:home-32-filled" width="15" height="15"></iconify-icon></p>
+            </div>
+            <div class="navbar-admin-tabs-bloc navbar-admin-Utilisateurs" {% if active_page == "Utilisateurs" %} aria-current="page" {% endif %}>
+                <p>Utilisateurs</p>
+            </div>
+            <div class="navbar-admin-tabs-bloc navbar-admin-Agents" {% if active_page == "Agents" %} aria-current="page" {% endif %}>
+                <p>Agents</p>
+            </div>
+            <div class="navbar-admin-tabs-bloc navbar-admin-Verification" {% if active_page == "Verification" %} aria-current="page" {% endif %}>
+                <p>Vérification</p>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-infos">
+        <div class="navbar-infos-stats">
+            <div class="stats-user">
+                <div class="stats-user-nom">
+                    NB Users
+                </div>
+                <div class="stats-user-number">
+                    96
+                </div>
+            </div>
+            <div class="stats-user">
+                <div class="stats-user-nom">
+                    NB Users admin
+                </div>
+                <div class="stats-user-number">
+                    14
+                </div>
+            </div>
+        </div>
+        <div class="navbar-infos-create">
+            infos-create
+        </div>
+    </div>
+    <div class="navbar-table">
+        table
+    </div>
+</div>
+
+{% endblock %}
