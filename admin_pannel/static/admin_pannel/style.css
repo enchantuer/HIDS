@@ -1,0 +1,128 @@
+.navbar-admin {
+    text-align: center;
+    background-color: var(--background-color);
+    display: grid;
+    grid-template-columns: auto auto 1fr auto auto;
+    padding-inline: 1.25rem; /* 20px -> 1.25rem */
+    margin: auto;
+    align-items: center;
+    grid-column: span 2 / span 2;
+}
+
+
+.navbar-admin-bar {
+    height: 1.25rem; /* 20px -> 1.25rem */
+    width: 2px;
+    background-color: white;
+}
+
+.navbar-admin-tabs {
+    display: flex;
+    gap: 0.5rem; /* 10px -> 0.625rem */
+}
+
+.navbar-admin-tabs-bloc {
+    color: var(--on-secondary-color);
+    background-color: white;
+    width: 7.5rem;
+    height: 1.5rem; /* 25px -> 2rem */
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: skew(-20deg);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.navbar-admin-tabs-bloc[aria-current="page"] {
+    background-color: var(--blue-color);
+    color: var(--primary-color);
+}
+
+.navbar-admin-tabs-bloc p {
+    transform: skew(20deg);
+    align-self: center;
+    font-size: 0.75rem; /* 15px -> 1rem */
+}
+
+.navbar-admin-tabs-bloc:hover {
+    background-color: var(--dark-blue-color);
+    color: var(--primary-color);
+}
+.navbar-admin-tabs-bloc:active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+
+.navbar-admin-home{
+    width: 1.75rem ;
+}
+
+
+/* Responsive Design */
+@media only screen and (max-width: 710px) {
+    .navbar-admin-tabs-bloc {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 710px) {
+    .navbar-admin-tabs-bloc-crop {
+        display: none !important;
+    }
+}
+
+
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    margin: 20px;
+}
+
+.navbar-admin .navbar-admin-tabs {
+    text-align: center;
+    justify-content: center;
+
+}
+.navbar-infos {
+    grid-row-start: 2;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    gap: 20px;
+}
+.navbar-infos .navbar-infos-stats{
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+
+}
+.stats-user{
+    display: flex;
+    flex-direction: column;
+}
+.stats-user-nombre{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.stats-user-number{
+    color: red;
+}
+.navbar-infos .navbar-infos-create{
+    background-color: white;
+    border-radius: 20px;
+
+}
+
+.navbar-table {
+    grid-row-start: 2;
+    background-color: white;
+    border-radius: 20px;
+}

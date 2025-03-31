@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'alerts.apps.AlertsConfig',
     'api.apps.ApiConfig',
     'login.apps.ConnectionConfig'
+    'admin_pannel.apps.AdminPannelConfig',
+
 ]
 
 MIDDLEWARE = [
