@@ -1,3 +1,5 @@
+const numberOfAlerts = "100";
+
 const dropdownBtn = document.querySelector(".dropdown-button");
 const dropdown = document.querySelector(".dropdown");
 
@@ -30,40 +32,17 @@ document.addEventListener('focusout', (event) => {
 });
 
 const form = document.querySelector('.search');
-
-function getAlerts(params = new URLSearchParams()) {
-    getFromAPI('/api/alerts', renderAlerts, params)
+function getParam() {
+    const params = new URLSearchParams()
+    params.append('page_size', numberOfAlerts);
+    return params
 }
-
-async function renderAlerts(json) {
-    if (json.alerts === undefined) throw new Error("Response from server is not normal");
-
-    const tableBody = document.querySelector('#alerts tbody');
-    tableBody.innerHTML = '';
-
-    json.alerts.forEach(alert => {
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-            <td class="align-left">${parseISODate(alert.created_at)}</td>
-            <td>${alert.agent__id}</td>
-            <td>${alert.agent__name}</td>
-            <td>${alert.source}</td>
-            <td>${alert.type}</td>
-            <td>${alert.description}</td>
-            <td>${alert.level}</td>
-            <td>${alert.id}</td>
-        `;
-
-        // Ajouter la ligne au tbody
-        tableBody.appendChild(row);
-    });
-}
+// TODO : Handle multiple pages
 function getAlertsFromFormEvent(event) {
     event.preventDefault();
     // Utiliser FormData pour récupérer les données du formulaire
     const formData = new FormData(form); // event.target fait référence au formulaire
-    const params = new URLSearchParams();
+    const params = getParam();
 
     // Convertir les données du FormData en paramètres d'URL
     formData.forEach((value, key) => {
@@ -83,8 +62,8 @@ function getAlertsFromFormEvent(event) {
 }
 
 document.querySelector('.search').addEventListener('submit', getAlertsFromFormEvent);
-getAlerts();
-
+getAlerts(getParam());
+// TODO : handle when receiving from websocket, check if belong to this page, put it in the right spot
 const socketAlerts = new WebSocket("/ws/alerts/");
 socketAlerts.onmessage = function (event) {
     console.log('New alert received');
