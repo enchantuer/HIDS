@@ -10,7 +10,6 @@ from django.utils.timezone import now, timedelta
 
 
 # Create your views here.
-# TODO : Use user timezone to send time / date
 def index(request):
     # Count the number of alert per hour for the last 7 hours
     def alert_count_per_hour(duration):
@@ -88,10 +87,6 @@ def index(request):
         ]
 
     context = {
-        "alerts_number": Alert.objects.count(),
-        "agents_number": Agent.objects.count(),
-        "agents_down_number": Agent.objects.filter(down=True).count(),
-        "alerts": Alert.objects.all().order_by('-created_at', '-id'),
         "chart": {
             "alert_type": alert_count_per_type(),
             "agent_stats": agent_stats(24),

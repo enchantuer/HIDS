@@ -29,19 +29,7 @@ document.addEventListener('focusout', (event) => {
   }
 });
 
-async function getFromAPI(path, callback, params = new URLSearchParams()) {
-    try {
-        const response = await fetch(`${path}?${params}`)
-        if (!checkResponse(response)) throw new Error("Could not fetch response from API");
-        callback(await response.json());
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-function checkResponse (response) {
-    return response && response.status === 200;
-}
+const form = document.querySelector('.search');
 
 function getAlerts(params = new URLSearchParams()) {
     getFromAPI('/api/alerts', renderAlerts, params)
@@ -57,7 +45,7 @@ async function renderAlerts(json) {
         const row = document.createElement('tr');
 
         row.innerHTML = `
-            <td class="align-left">${alert.created_at}</td>
+            <td class="align-left">${parseISODate(alert.created_at)}</td>
             <td>${alert.agent__id}</td>
             <td>${alert.agent__name}</td>
             <td>${alert.source}</td>
@@ -71,11 +59,10 @@ async function renderAlerts(json) {
         tableBody.appendChild(row);
     });
 }
-
 function getAlertsFromFormEvent(event) {
     event.preventDefault();
     // Utiliser FormData pour récupérer les données du formulaire
-    const formData = new FormData(event.target); // event.target fait référence au formulaire
+    const formData = new FormData(form); // event.target fait référence au formulaire
     const params = new URLSearchParams();
 
     // Convertir les données du FormData en paramètres d'URL
@@ -85,7 +72,11 @@ function getAlertsFromFormEvent(event) {
             params.append(key, value.join(','));
         } else {
             // Sinon, on les ajoute normalement
-            params.append(key, value);
+            if (key === "start_date" || key === "end_date") {
+                // Appliquer le formatage seulement sur les dates
+                value = formatDate(value);
+            }
+            params.append(key, value.trim());
         }
     });
     getAlerts(params);
@@ -93,3 +84,62 @@ function getAlertsFromFormEvent(event) {
 
 document.querySelector('.search').addEventListener('submit', getAlertsFromFormEvent);
 getAlerts();
+
+const socketAlerts = new WebSocket("/ws/alerts/");
+socketAlerts.onmessage = function (event) {
+    console.log('New alert received');
+    const json = JSON.parse(event.data);
+    console.log(json)
+    if (alertMatchesFilters(json.alert)) updateAlerts(json);
+};
+
+function alertMatchesFilters(alert) {
+    const formData = new FormData(form);
+
+    // Récupérer les valeurs du formulaire
+    const searchType = formData.get("type").toLowerCase().trim();
+    const startDate = formData.get("start_date");
+    const endDate = formData.get("end_date");
+    const selectedSources = formData.getAll('source');
+
+    // Vérification du type (recherche textuelle)
+    if (searchType && !alert.type.toLowerCase().includes(searchType)) {
+        return false;
+    }
+
+    // Vérification des dates
+    const alertDate = new Date(alert.created_at);
+    if (startDate && alertDate < new Date(startDate)) {
+        return false;
+    }
+    if (endDate && alertDate > new Date(endDate)) {
+        return false;
+    }
+
+    // Vérification des sources
+    if (selectedSources.length > 0 && !selectedSources.includes(alert.source)) {
+        return false;
+    }
+
+    return true;
+}
+
+function updateAlerts(json) {
+    const alert = json.alert;
+    if (json.operation === 'create') {
+        const tableBody = document.querySelector('#alerts tbody');
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td class="align-left">${parseISODate(alert.created_at)}</td>
+            <td>${alert.agent__id}</td>
+            <td>${alert.agent__name}</td>
+            <td>${alert.source}</td>
+            <td>${alert.type}</td>
+            <td>${alert.description}</td>
+            <td>${alert.level}</td>
+            <td>${alert.id}</td>
+        `;
+        tableBody.insertBefore(row, tableBody.firstChild);
+    }
+}

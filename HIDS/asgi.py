@@ -13,4 +13,12 @@ from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'HIDS.settings')
 
-application = get_asgi_application()
+django_asgi_app = get_asgi_application()
+
+from channels.routing import ProtocolTypeRouter, URLRouter
+from api.routing import websocket_urlpatterns  # Importe le routeur WebSocket
+
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+    "websocket": URLRouter(websocket_urlpatterns),  # Associe WebSockets aux routes
+})

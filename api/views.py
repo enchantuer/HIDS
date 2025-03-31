@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from api.models import Agent, Alert
+from api.models import get_stats as api_get_stats
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -99,10 +100,10 @@ def get_alerts(request):
         alerts = alerts.filter(source_filter)
     # Filtrage par plage de dates si les deux paramètres sont présents
     if start_date_str:
-        start_date = datetime.strptime(start_date_str, '%Y-%m-%d %H:%M:%S')
+        start_date = datetime.fromisoformat(start_date_str)
         alerts = alerts.filter(created_at__gte=start_date)  # >= start_date
     if end_date_str:
-        end_date = datetime.strptime(end_date_str, '%Y-%m-%d %H:%M:%S')
+        end_date = datetime.fromisoformat(end_date_str)
         alerts = alerts.filter(created_at__lte=end_date)  # <= end_date
 
     # Trier les résultats
@@ -134,3 +135,6 @@ def get_alerts(request):
             'total_alerts': paginator.count
         }
     })
+
+def get_stats(request):
+    return JsonResponse(api_get_stats())
