@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
-    'login.apps.ConnectionConfig',
     'admin_pannel.apps.AdminPannelConfig',
     'alerts.apps.AlertsConfig',
     'api.apps.ApiConfig',

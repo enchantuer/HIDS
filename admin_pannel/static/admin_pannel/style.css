@@ -96,9 +96,8 @@
     gap: 20px;
 }
 .navbar-infos .navbar-infos-stats{
-    background-color: white;
-    border-radius: 20px;
     display: flex;
+    flex-direction: row;
     text-align: center;
     justify-content: space-around;
 
@@ -116,13 +115,9 @@
     color: red;
 }
 .navbar-infos .navbar-infos-create{
-    background-color: white;
-    border-radius: 20px;
 
 }
 
 .navbar-table {
     grid-row-start: 2;
-    background-color: white;
-    border-radius: 20px;
 }
