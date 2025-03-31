@@ -7,7 +7,6 @@ from api.models import Alert, Agent, LogNbRequest
 from django.db.models.functions import TruncHour
 from django.db.models import Count, Sum
 from django.utils.timezone import now, timedelta
-from dashboard.models import Alert, Agent
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
