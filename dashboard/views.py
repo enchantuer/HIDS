@@ -10,7 +10,6 @@ from django.utils.timezone import now, timedelta
 
 
 # Create your views here.
-# TODO : Use user timezone to send time / date
 def index(request):
     # Count the number of alert per hour for the last 7 hours
     def alert_count_per_hour(duration):

@@ -100,10 +100,10 @@ def get_alerts(request):
         alerts = alerts.filter(source_filter)
     # Filtrage par plage de dates si les deux paramètres sont présents
     if start_date_str:
-        start_date = datetime.strptime(start_date_str, '%Y-%m-%d %H:%M:%S')
+        start_date = datetime.fromisoformat(start_date_str)
         alerts = alerts.filter(created_at__gte=start_date)  # >= start_date
     if end_date_str:
-        end_date = datetime.strptime(end_date_str, '%Y-%m-%d %H:%M:%S')
+        end_date = datetime.fromisoformat(end_date_str)
         alerts = alerts.filter(created_at__lte=end_date)  # <= end_date
 
     # Trier les résultats

@@ -45,7 +45,7 @@ async function renderAlerts(json) {
         const row = document.createElement('tr');
 
         row.innerHTML = `
-            <td class="align-left">${alert.created_at}</td>
+            <td class="align-left">${parseISODate(alert.created_at)}</td>
             <td>${alert.agent__id}</td>
             <td>${alert.agent__name}</td>
             <td>${alert.source}</td>
@@ -72,7 +72,11 @@ function getAlertsFromFormEvent(event) {
             params.append(key, value.join(','));
         } else {
             // Sinon, on les ajoute normalement
-            params.append(key, value);
+            if (key === "start_date" || key === "end_date") {
+                // Appliquer le formatage seulement sur les dates
+                value = formatDate(value);
+            }
+            params.append(key, value.trim());
         }
     });
     getAlerts(params);
