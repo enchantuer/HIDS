@@ -1,5 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import AnonymousUser
 from django.core.cache import cache
 
 
@@ -12,9 +13,11 @@ class AlertConsumer(AsyncWebsocketConsumer):
 
         # cached_alerts = cache.get('top_alerts') or []
         # await self.send(text_data=json.dumps({"alerts": cached_alerts}))
-
-        await self.channel_layer.group_add("alerts", self.channel_name)
-        await self.accept()  # Accepte la connexion WebSocket
+        if self.scope["user"] is None or isinstance(self.scope["user"], AnonymousUser):
+            await self.close()
+        else:
+            await self.channel_layer.group_add("alerts", self.channel_name)
+            await self.accept()  # Accepte la connexion WebSocket
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard("alerts", self.channel_name)
