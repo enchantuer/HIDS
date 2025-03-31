@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from api.models import Agent, Alert
+from api.models import get_stats as api_get_stats
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -134,3 +135,6 @@ def get_alerts(request):
             'total_alerts': paginator.count
         }
     })
+
+def get_stats(request):
+    return JsonResponse(api_get_stats())

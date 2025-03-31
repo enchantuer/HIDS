@@ -88,9 +88,6 @@ def index(request):
         ]
 
     context = {
-        "alerts_number": Alert.objects.count(),
-        "agents_number": Agent.objects.count(),
-        "agents_down_number": Agent.objects.filter(down=True).count(),
         "alerts": Alert.objects.all().order_by('-created_at', '-id'),
         "chart": {
             "alert_type": alert_count_per_type(),
