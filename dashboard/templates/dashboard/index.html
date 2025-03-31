@@ -11,22 +11,24 @@
     {{ chart.alert_type|json_script:"alert-type-data" }}
     {{ chart.ia_stats|json_script:"ia-data" }}
     {{ chart.agent_stats|json_script:"agent-data" }}
+    <script src="{% static 'js/api.js' %}"></script>
     <script src="{% static 'dashboard/charts.js' %}" defer></script>
+    <script src="{% static 'dashboard/script.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
     <div class="card" id="summary">
         <div class="stats">
             <h2> Total </h2>
-            <span> {{ alerts_number }} </span>
+            <span id="nb-alerts"></span>
         </div>
         <div class="stats">
             <h2> NB Agents </h2>
-            <span> {{ agents_number }} </span>
+            <span id="nb-agents"></span>
         </div>
         <div class="stats">
             <h2> Downs </h2>
-            <span> {{ agents_down_number }} </span>
+            <span id="nb-agents-down"></span>
         </div>
     </div>
     <div class="card" id="alert-evolution">
@@ -74,18 +76,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for alert in alerts %}
-                <tr>
-                    <td class="align-left">{{ alert.created_at }}</td>
-                    <td>{{ alert.agent.id }}</td>
-                    <td>{{ alert.agent.name }}</td>
-                    <td>{{ alert.source }}</td>
-                    <td>{{ alert.type }}</td>
-                    <td>{{ alert.description }}</td>
-                    <td>{{ alert.level }}</td>
-                    <td>{{ alert.id }}</td>
-                </tr>
-            {% endfor %}
+                {% comment %}Fill with the js{% endcomment %}
             </tbody>
         </table>
     </div>
