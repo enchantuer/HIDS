@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
+    'login.apps.ConnectionConfig',
+    'admin_pannel.apps.AdminPannelConfig',
     'alerts.apps.AlertsConfig',
     'api.apps.ApiConfig',
-    'login.apps.ConnectionConfig'
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Login redirection
 LOGIN_REDIRECT_URL = '/dashboard/'  # L'utilisateur sera redirigé vers cette URL après la connexion
