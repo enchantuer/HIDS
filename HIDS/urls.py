@@ -24,4 +24,6 @@ urlpatterns = [
     path("dashboard/", include("dashboard.urls")),
 
     path("admin_pannel/", include("admin_pannel.urls")),
+    path("alerts/", include("alerts.urls")),
+    path("api/", include("api.urls")),
 ]

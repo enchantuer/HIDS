@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
     'admin_pannel.apps.AdminPannelConfig',
-
+    'alerts.apps.AlertsConfig',
+    'api.apps.ApiConfig'
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'HIDS.wsgi.application'
 
+# Backend pour WebSockets
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -129,8 +137,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # settings.py
 LOGIN_REDIRECT_URL = '/dashboard/'  # L'utilisateur sera redirigé vers cette URL après la connexion
 LOGOUT_REDIRECT_URL = '/login/'  # Après la déconnexion, il sera redirigé ici
 
+# Daphne
+ASGI_APPLICATION = "HIDS.asgi.application"
