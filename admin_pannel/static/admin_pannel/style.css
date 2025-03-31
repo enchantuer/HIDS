@@ -2,8 +2,7 @@
     text-align: center;
     background-color: var(--background-color);
     display: grid;
-    grid-template-columns: auto auto 1fr auto auto;
-    padding-inline: 1.25rem; /* 20px -> 1.25rem */
+    padding-inline: 1.25rem;
     margin: auto;
     align-items: center;
     grid-column: span 2 / span 2;
@@ -11,21 +10,21 @@
 
 
 .navbar-admin-bar {
-    height: 1.25rem; /* 20px -> 1.25rem */
+    height: 1.25rem;
     width: 2px;
     background-color: white;
 }
 
 .navbar-admin-tabs {
     display: flex;
-    gap: 0.5rem; /* 10px -> 0.625rem */
+    gap: 0.5rem;
 }
 
 .navbar-admin-tabs-bloc {
     color: var(--on-secondary-color);
     background-color: white;
     width: 7.5rem;
-    height: 1.5rem; /* 25px -> 2rem */
+    height: 1.5rem;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -72,15 +71,11 @@
     }
 }
 
-
-
-
 .parent {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: auto 1fr;
     gap: 20px;
-    margin: 20px;
+    margin: 20px 15%;
 }
 
 .navbar-admin .navbar-admin-tabs {
@@ -88,14 +83,14 @@
     justify-content: center;
 
 }
-.navbar-infos {
+.user-infos {
     grid-row-start: 2;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
     gap: 20px;
 }
-.navbar-infos .navbar-infos-stats{
+.user-infos .user-infos-stats{
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -114,10 +109,9 @@
 .stats-user-number{
     color: red;
 }
-.navbar-infos .navbar-infos-create{
-
+.user-infos .admin-infos-create h3{
 }
 
-.navbar-table {
+.user-table {
     grid-row-start: 2;
 }

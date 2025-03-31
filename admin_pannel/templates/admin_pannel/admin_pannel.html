@@ -36,8 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="navbar-infos">
-        <div class="card navbar-infos-stats">
+    <div class="user-infos">
+        <div class="card user-infos-stats">
             <div class="stats-user">
                 <div class="stats-user-nom">
                     NB Users
@@ -55,13 +55,23 @@
                 </div>
             </div>
         </div>
-        <div class="card navbar-infos-create">
+        <div class="card admin-infos-create">
             <h2>Créer / Éditer</h2>
-            <hr>
-
+            <form method="post" >
+                {% csrf_token %}
+                <h3>Nom</h3>
+                <input type="text" name="nom" id="nom" placeholder="Nom">
+                <h3>Prenom</h3>
+                <input type="text" name="prenom" id="prenom" placeholder="Prenom">
+                <h3>ID</h3>
+                <input type="text" name="id" id="id" placeholder="ID">
+                <h3>Statut</h3>
+                <input type="text" name="statut" id="statut" placeholder="Statut">
+                <button type="submit">Créer / Éditer</button>
+            </form>
         </div>
     </div>
-    <div class=" card navbar-table">
+    <div class=" card user-table">
         <h2>Alertes</h2>
         <hr>
         <table class="table">
@@ -74,8 +84,6 @@
                 <th scope="col">Edit</th>
             </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 </div>
