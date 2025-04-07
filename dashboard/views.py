@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from api.models import Alert, Agent, LogNbRequest
 
@@ -8,6 +8,8 @@ from django.db.models.functions import TruncHour
 from django.db.models import Count, Sum
 from django.utils.timezone import now, timedelta
 
+def redirect_to_dashboard(request):
+    return redirect('dashboard')
 
 def info(request):
     return render(request, "dashboard/info.html")
