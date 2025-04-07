@@ -10,6 +10,9 @@ from django.utils.timezone import now, timedelta
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
+def info(request):
+    return render(request, "dashboard/info.html")
+
 # Create your views here.
 @login_required(login_url=reverse_lazy("login"))
 def index(request):
