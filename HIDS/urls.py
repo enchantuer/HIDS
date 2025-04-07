@@ -22,7 +22,7 @@ import dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("dashboard/", include("dashboard.urls")),
+    path("", include("dashboard.urls")),
     path("alerts/", include("alerts.urls")),
     path("api/", include("api.urls")),
     path('login/', LoginView.as_view(), name='login'),
