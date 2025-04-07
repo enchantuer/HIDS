@@ -1,0 +1,69 @@
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+#information {
+    grid-column-end: span 2;
+    padding: 10px;
+}
+
+#ecoles {
+    grid-column-end: span 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.titre-ecoles {
+    text-align: left;
+    width: 100%;
+}
+
+.logos-ecoles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 100px;
+}
+
+#isen, #uqac {
+    height: 80px;
+    width: auto;
+}
+
+#equipe {
+    grid-row-end: span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 20px;
+}
+
+.titre-equipe {
+    text-align: left;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.membre {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    padding-left: 50px;
+}
+
+.membre img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#source-code{
+    grid-column-end: span 2;
+    display: flex;
+    flex-direction: row;
+}

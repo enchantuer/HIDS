@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from api.models import Alert, Agent, LogNbRequest
 
@@ -9,6 +9,14 @@ from django.db.models import Count, Sum
 from django.utils.timezone import now, timedelta
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+
+@login_required(login_url=reverse_lazy("login"))
+def redirect_to_dashboard(request):
+    return redirect('dashboard')
+
+@login_required(login_url=reverse_lazy("login"))
+def info(request):
+    return render(request, "dashboard/info.html")
 
 # Create your views here.
 @login_required(login_url=reverse_lazy("login"))
