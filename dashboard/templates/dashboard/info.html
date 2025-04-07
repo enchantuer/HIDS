@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Info{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/info.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="card" id="information">
+        <h1>Informations</h1>
+    </div>
+    <div class="card" id="ecoles">
+        <h2 class="titre-ecoles">Nos Écoles</h2>
+        <div class="logos-ecoles">
+            <a href="https://isen-ouest.fr/"><img src="{% static 'dashboard/images/ISEN.png' %}" alt="photo-isen" id="isen"></a>
+            <a href="https://www.uqac.ca/"><img src="{% static 'dashboard/images/UQAC.png' %}" alt="photo-uqac" id="uqac"></a>
+        </div>
+    </div>
+    <div class="card" id="equipe">
+        <h2 class="titre-equipe">Notre équipe</h2>
+        <div class="membre">
+            <img src="{% static 'dashboard/images/maelle.jpg' %}" alt="Maëlle SOPRANSI">
+            <div>
+                <strong>Maël SOPRANSI</strong><br>
+                Master 1 Cybersécurité
+            </div>
+        </div>
+        <div class="membre">
+            <img src="{% static 'dashboard/images/florent.jpg' %}" alt="Florent BUTERY">
+            <div>
+                <strong>Florent BUTERY</strong><br>
+                Master 1 Cybersécurité
+            </div>
+        </div>
+        <div class="membre">
+            <img src="{% static 'dashboard/images/goustan.png' %}" alt="Goustan SERMON-THUILLIER">
+            <div>
+                <strong>Goustan SERMON-THUILLIER</strong><br>
+                Master 1 Cybersécurité
+            </div>
+        </div>
+        <div class="membre">
+            <img src="{% static 'dashboard/images/raphael.jpg' %}" alt="Raphaël FOSSE">
+            <div>
+                <strong>Raphaël FOSSE</strong><br>
+                Master 1 Cybersécurité
+            </div>
+        </div>
+        <div class="membre">
+            <img src="{% static 'dashboard/images/vincent.jpg' %}" alt="Vincent ROCHER">
+            <div>
+                <strong>Vincent ROCHER</strong><br>
+                Master 1 Cybersécurité
+            </div>
+        </div>
+    </div>
+    <div class="card" id="description">
+        <h2>Le projet</h2>
+        <p>Notre HIDS hybride repose sur une architecture innovante composée de deux éléments principaux : des agents installés sur chaque machine et un serveur central.<br><br>
+
+            Les agents collectent, formatent et analysent localement les requêtes grâce à trois méthodes de vérification :<br>
+            ✔️ Analyse locale basée sur des signatures connues (Yara, Snort, Suricata).<br>
+            ✔️ Vérification en ligne via des API de sécurité (VirusTotal, AbuseIPDB).<br>
+            ✔️ Détection avancée par intelligence artificielle, entraînée à identifier des comportements suspects.<br><br>
+
+            Le serveur centralise les alertes et fournit une interface graphique sécurisée permettant aux administrateurs de suivre l’état des machines, gérer les alertes et mettre à jour les méthodes de vérification.<br><br>
+
+            Pour assurer un déploiement simple et rapide, notre solution sera dockerisée, facilitant son intégration sur divers systèmes sans infrastructure lourde. Notre objectif est d'offrir une protection robuste, accessible et évolutive aux entreprises et particuliers. 🚀</p>
+    </div>
+    <div class="card" id="source-code">
+        <h2>Code source du projet : &nbsp;&nbsp;<a href="https://github.com/enchantuer/HIDS" style="font-size: smaller; text-decoration: none">https://github.com/enchantuer/HIDS</a></h2>
+    </div>
+{% endblock %}

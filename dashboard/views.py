@@ -9,6 +9,9 @@ from django.db.models import Count, Sum
 from django.utils.timezone import now, timedelta
 
 
+def info(request):
+    return render(request, "dashboard/info.html")
+
 # Create your views here.
 def index(request):
     # Count the number of alert per hour for the last 7 hours
