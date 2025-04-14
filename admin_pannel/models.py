@@ -11,3 +11,4 @@ class Agent(models.Model):
     machine = models.CharField(max_length=100)
     adresse = models.CharField(max_length=100)
     statut = models.BooleanField(default=False)
+# Create your models here.
