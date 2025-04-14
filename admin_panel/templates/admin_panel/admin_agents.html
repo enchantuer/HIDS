@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accueil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/admin_navbar.css' %}">
+    <script>
+        const ADD_AGENT_URL  = "{% url 'add_agent' %}";
+        const DELETE_AGENT_BASE_URL = "{% url 'delete_agent' 0 %}".replace("0/", "");
+    </script>
+    <script src="{% static 'admin_panel/admin_agents.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+{% include "admin_panel/admin_navbar.html" %}
+
+<div class="user-infos">
+    <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents
+            </div>
+            <div class="stats-user-number">
+                <span id="actifCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents down
+            </div>
+            <div class="stats-user-number">
+                <span id="inactifCount">0</span>
+            </div>
+        </div>
+    </div>
+    <div class="card admin-infos-create">
+        <h2>Créer / Éditer</h2>
+        <form method="POST" id="agentForm">
+            {% csrf_token %}
+            <input type="hidden" name="id" id="id">
+            <label for="name">Nom</label>
+            <input type="text" name="name" id="name" required>
+            <label for="system">System</label>
+            <input type="text" name="system" id="system" required>
+            <label for="adresse">Adresse</label>
+            <input type="text" name="adresse" id="adresse" required>
+            <label for="is_up">Down</label>
+            <label class="switch">
+                <input type="checkbox" id="is_up" name="is_up">
+                <span class="slider round"></span>
+            </label>
+            <button type="submit">Créer / Éditer</button>
+        </form>
+    </div>
+</div>
+
+<div class="card user-table ">
+    <h2>Agents</h2>
+    <hr>
+    <table class="table" id="agentTable">
+        <thead>
+        <tr>
+            <th class="align-left" scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">System</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for agent in agents %}
+              <tr data-id="{{ agent.id }}" data-statut="{{ agent.down|yesno:"false,true" }}">
+                  <td class="id">{{ agent.id }}</td>
+                  <td class="name">{{ agent.name }}</td>
+                  <td class="system">{{ agent.system }}</td>
+                  <td class="adresse">{{ agent.adresse }}</td>
+                  <td class="statut">{% if agent.down %}Non{% else %}Oui{% endif %}</td>
+                  <td class="actions">
+                      <div class="dropdown">
+                          <p class="dropbtn">
+                              <iconify-icon icon="fluent:more-horizontal-32-filled" width="15" height="15"></iconify-icon>
+                          </p>
+                          <div class="dropdown-content">
+                              <a href="#" class="edit-agent" data-id="{{ agent.id }}">Éditer</a>
+                              <a href="#" class="delete-agent" data-id="{{ agent.id }}">Supprimer</a>
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

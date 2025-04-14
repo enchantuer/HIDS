@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("dashboard.urls")),
     path("alerts/", include("alerts.urls")),
+    path("admin_panel/", include("admin_panel.urls")),
     path("api/", include("api.urls")),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

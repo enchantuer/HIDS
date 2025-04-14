@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'alerts.apps.AlertsConfig',
     'api.apps.ApiConfig',
-    'login.apps.ConnectionConfig'
+    'login.apps.ConnectionConfig',
+    'admin_panel.apps.AdminPanelConfig'
 ]
 
 MIDDLEWARE = [
