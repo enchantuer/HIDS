@@ -1,0 +1,26 @@
+<div class="navbar-admin">
+    <div class="navbar-admin-tabs">
+        <a href="{% url 'pannel' %}">
+            <div class="navbar-admin-tabs-bloc admin-home {% if request.path == '/admin_pannel/' %}active{% endif %}" data-page="pannel">
+                <p><iconify-icon icon="fluent:home-32-filled" width="15" height="15"></iconify-icon></p>
+            </div>
+        </a>
+        <a href="{% url 'utilisateurs' %}">
+            <div class="navbar-admin-tabs-bloc {% if request.path == '/admin_pannel/utilisateurs/' %}active{% endif %}" data-page="Utilisateurs">
+                <p>Utilisateurs</p>
+            </div>
+        </a>
+        <a href="{% url 'agents' %}">
+            <div class="navbar-admin-tabs-bloc {% if request.path == '/admin_pannel/agents/' %}active{% endif %}" data-page="Agents">
+                <p>Agents</p>
+            </div>
+        </a>
+        <a href="{% url 'verification' %}">
+            <div class="navbar-admin-tabs-bloc {% if request.path == '/admin_pannel/verification/' %}active{% endif %}" data-page="Verification">
+                <p>Vérification</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+

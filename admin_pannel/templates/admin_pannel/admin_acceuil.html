@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Acceuil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/admin_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/admin_acceuil.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    {{ chart.alert_evolution|json_script:"alert-evolution-data" }}
+    {{ chart.alert_type|json_script:"alert-type-data" }}
+    {{ chart.ia_stats|json_script:"ia-data" }}
+    {{ chart.agent_stats|json_script:"agent-data" }}
+    <script src="{% static 'dashboard/charts.js' %}" defer></script>
+    <script>
+        const ADD_USER_URL = "{% url 'add_user' %}";
+        const DELETE_USER_BASE_URL = "{% url 'delete_user' 0 %}".replace("0/", "");
+    </script>
+
+    <script src="{% static 'admin_pannel/admin_acceuil.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+
+{% include "admin_pannel/admin_navbar.html" %}
+
+<div class="admin_logo">
+    <img src="../static/images/logo.png" class="card">
+</div>
+<div class="admin_infos user-infos">
+        <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users
+            </div>
+            <div class="stats-user-number">
+                <span id="userCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users admin
+            </div>
+            <div class="stats-user-number">
+                <span id="adminCount">0</span>
+            </div>
+        </div>
+    </div>
+    <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents
+            </div>
+            <div class="stats-user-number">
+                <span id="userCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents down
+            </div>
+            <div class="stats-user-number">
+                <span id="adminCount">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

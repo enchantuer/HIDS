@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Acceuil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/admin_verification.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/admin_navbar.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    {{ chart.alert_evolution|json_script:"alert-evolution-data" }}
+    {{ chart.alert_type|json_script:"alert-type-data" }}
+    {{ chart.ia_stats|json_script:"ia-data" }}
+    {{ chart.agent_stats|json_script:"agent-data" }}
+    <script src="{% static 'dashboard/charts.js' %}" defer></script>
+
+    <script src="{% static 'admin_pannel/admin_verification.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+
+{% include "admin_pannel/admin_navbar.html" %}
+<div class="card local">
+    <h2>Local</h2>
+    <div class="list-verif">
+        <div class="verif">
+            <p>Yara</p>
+            <label class="switch">
+                <input type="checkbox" id="yara" name="yara"><span class="slider round"></span>
+            </label>
+        </div>
+        <div class="verif">
+            <p>suricata</p>
+            <label class="switch">
+                <input type="checkbox" id="suricata" name="suricata"><span class="slider round"></span>
+            </label>
+        </div>
+        <div class="verif">
+            <p>Snort</p>
+            <label class="switch">
+                <input type="checkbox" id="snort" name="snort"><span class="slider round"></span>
+            </label>
+        </div>
+        <div class="verif">
+            <p>Custom</p>
+            <label class="switch">
+                <input type="checkbox" id="custom" name="custom"><span class="slider round"></span>
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<div class="card cloud">
+    <h2>Cloud</h2>
+     <div class="list-verif">
+        <div class="verif">
+            <p>Virus Total</p>
+            <label class="switch">
+                <input type="checkbox" id="virustotal" name="virustotal"><span class="slider round"></span>
+            </label>
+        </div>
+        <div class="verif">
+            <p>IPDB</p>
+            <label class="switch">
+                <input type="checkbox" id="ipdb" name="ipdb"><span class="slider round"></span>
+            </label>
+        </div>
+        <div class="verif">
+            <p>OPE</p>
+            <label class="switch">
+                <input type="checkbox" id="ope" name="ope"><span class="slider round"></span>
+            </label>
+        </div>
+
+    </div>
+</div>
+<div class="card ia">
+    <h2>Ia</h2>
+    <div class="orga-ia">
+        <div class="stat-ia">
+            hey
+        </div>
+        <div class="ligne-ia">
+
+        </div>
+        <div class="list-verif">
+            <div class="verif">
+                <p>Vector</p>
+                <label class="switch">
+                    <input type="checkbox" id="modele1" name="modele1"><span class="slider round"></span>
+                </label>
+            </div>
+            <div class="verif">
+                <p>Random Forest</p>
+                <label class="switch">
+                    <input type="checkbox" id="modele2" name="modele2"><span class="slider round"></span>
+                </label>
+            </div>
+
+    </div>
+    </div>
+
+</div>
+{% endblock %}

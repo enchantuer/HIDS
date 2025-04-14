@@ -13,13 +13,12 @@
             <a href="{% url 'alerts' %}" class="navbar-tabs-bloc" {% if active_page == "alerts" %} aria-current="page" {% endif %}>
                 <p>Alertes</p>
             </a>
-            <a href="#" class="navbar-tabs-bloc" {% if active_page == "admin" %} aria-current="page" {% endif %}>
+            <a href="{% url 'admin_pannel' %}" class="navbar-tabs-bloc" {% if active_page == "admin" %} aria-current="page" {% endif %}>
                 <p>Admin</p>
             </a>
         </div>
         <div class="navbar-icon">
             <img src="{% static 'images/photo-profile.jpg' %}" alt="photo-profile">
-
         </div>
         <div class="navbar-burger">
             <iconify-icon icon="fluent:line-horizontal-3-16-filled" width="35" height="35"></iconify-icon>
@@ -28,13 +27,9 @@
         <div class="dropdown-menu">
             <a href="{% url 'dashboard' %}" class="navbar-tabs-bloc-crop" {% if active_page == "dashboard" %} aria-current="page" {% endif %}>Dashboard</a>
             <a href="{% url 'alerts' %}" class="navbar-tabs-bloc-crop" {% if active_page == "alerts" %} aria-current="page" {% endif %}>Alertes</a>
-            <a href="#" class="navbar-tabs-bloc-crop" {% if active_page == "admin" %} aria-current="page" {% endif %}>Admin</a>
-            <a href="{% url 'info' %}" {% if active_page == "information" %} aria-current="page" {% endif %}>Informations</a>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                    <button {% if active_page == "logout" %} aria-current="page" {% endif %}>Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </button>
-            </form>
-
+            <a href="{% url 'admin_pannel' %}" class="navbar-tabs-bloc-crop" {% if active_page == "admin" %} aria-current="page" {% endif %}>Admin</a>
+            <a href="#" {% if active_page == "information" %} aria-current="page" {% endif %}>Informations</a>
+            <a href="#" {% if active_page == "logout" %} aria-current="page" {% endif %}>Déconexion <iconify-icon icon="fluent:sign-out-24-filled" width="24" height="24"></iconify-icon> </a>
         </div>
     </nav>
 {% endwith %}

@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 
 import os
 
-from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'HIDS.settings')
@@ -21,7 +20,5 @@ from api.routing import websocket_urlpatterns  # Importe le routeur WebSocket
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
-    "websocket": AuthMiddlewareStack(
-        URLRouter(websocket_urlpatterns)
-    ),  # Associe WebSockets aux routes
+    "websocket": URLRouter(websocket_urlpatterns),  # Associe WebSockets aux routes
 })

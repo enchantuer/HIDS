@@ -1,81 +1,9 @@
-.navbar-admin {
-    text-align: center;
-    background-color: var(--background-color);
-    display: grid;
-    padding-inline: 1.25rem;
-    margin: auto;
-    align-items: center;
-    grid-column: span 2 / span 2;
-}
-
-
-.navbar-admin-bar {
-    height: 1.25rem;
-    width: 2px;
-    background-color: white;
-}
-
-.navbar-admin-tabs {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.navbar-admin-tabs-bloc {
-    color: var(--on-secondary-color);
-    background-color: white;
-    width: 7.5rem;
-    height: 1.5rem;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: skew(-20deg);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.navbar-admin-tabs-bloc[aria-current="page"] {
-    background-color: var(--blue-color);
-    color: var(--primary-color);
-}
-
-.navbar-admin-tabs-bloc p {
-    transform: skew(20deg);
-    align-self: center;
-    font-size: 0.75rem; /* 15px -> 1rem */
-}
-
-.navbar-admin-tabs-bloc:hover {
-    background-color: var(--dark-blue-color);
-    color: var(--primary-color);
-}
-.navbar-admin-tabs-bloc:active {
-    background-color: var(--primary-color);
-    color: var(--on-primary-color);
-}
-
-.navbar-admin-home{
-    width: 1.75rem ;
-}
-
-
-/* Responsive Design */
-@media only screen and (max-width: 710px) {
-    .navbar-admin-tabs-bloc {
-        display: none;
-    }
-}
-
-@media only screen and (min-width: 710px) {
-    .navbar-admin-tabs-bloc-crop {
-        display: none !important;
-    }
-}
-
-.parent {
+.container {
     display: grid;
     grid-template-columns: auto 1fr;
+    grid-template-rows: 20px 1fr;
     gap: 20px;
-    margin: 20px 15%;
+    margin: 20px 10%;
 }
 
 .navbar-admin .navbar-admin-tabs {
@@ -88,30 +16,269 @@
     display: flex;
     flex-direction: column;
     border-radius: 20px;
+    width: 15rem;
     gap: 20px;
+
+    justify-self: center;
 }
+/* Style pour le tableau des infos users */
 .user-infos .user-infos-stats{
     display: flex;
     flex-direction: row;
-    text-align: center;
-    justify-content: space-around;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+
+
 
 }
 .stats-user{
     display: flex;
     flex-direction: column;
 }
-.stats-user-nombre{
-    font-size: 2rem;
+.stats-user-nom{
+    font-weight: bold;
+    font-size: 1rem;
+
+}
+.stats-user-number{
+    color: var(--red-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    align-self: center;
+}
+/* Style pour le tableau des edit / add users */
+.user-infos .admin-infos-create label{
+    color: var(--blue-color);
+    font-size: medium;
+    font-weight: bold;
+}
+.user-infos .admin-infos-create form{
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+.user-infos .admin-infos-create h2{
+    margin-bottom: 5px;
+}
+.user-infos .admin-infos-create form input{
+   border-radius: 7.5px;
+    border: 1px solid var(--on-secondary-color);
+    height: 1.5rem;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.user-infos .admin-infos-create button{
+    background-color: var(--blue-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.user-infos .admin-infos-create button:hover{
+    background-color: var(--dark-blue-color);
+}
+.user-infos .admin-infos-create button:active{
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+.user-table {
+    grid-row-start: 2;
+}
+.user-table table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;  /* Fixe la largeur des colonnes */
+}
+
+.user-table thead, .user-table tbody tr {
+    display: table;
+    width: 100%;
+}
+
+.user-table thead th {
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.user-table tbody {
+    display: block;
+    height: 20rem;  /* Hauteur maximale pour tbody */
+    overflow-y: auto;   /* Ajout de la barre de défilement */
+    width: 100%;
+}
+
+.user-table td {
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;  /* Assure que les mots longs sont coupés */
+}
+
+/* Fixer la largeur des colonnes */
+.user-table td:nth-child(1) {
+    width: 10%;
+}
+
+.user-table td:nth-child(2) {
+    width: 20%;
+}
+
+.user-table td:nth-child(3) {
+    width: 20%;
+}
+
+.user-table td:nth-child(4) {
+    width: 30%;
+}
+
+.user-table td:nth-child(5) {
+    width: 10%;
+}
+
+.user-table td:nth-child(6) {
+    width: 10%;
+}
+
+
+/* Style pour la modale */
+.modal {
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    z-index: 1; /* Au-dessus de tout */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0); /* Fond noir avec opacité */
+    background-color: rgba(0,0,0,0.4); /* Fond avec transparence */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
     font-weight: bold;
 }
 
-.stats-user-number{
-    color: red;
-}
-.user-infos .admin-infos-create h3{
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.user-table {
-    grid-row-start: 2;
+/*switch*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 22px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 24px;
+    margin-left: 10%;
+}
+.switch input { display: none; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    background-color: var(--red-color);
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; width: 20px;
+    left: -1px; bottom: -1px;
+    border: 2px solid var(--secondary-color);
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+
+}
+input:checked + .slider {
+    background-color: var(--blue-color);
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Style pour le bouton déroulant */
+.actions .dropdown {
+    position: relative;
+    display: inline-block;
+
+}
+
+.actions .dropdown .dropbtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+}
+
+.actions .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border: 2px solid var(--secondary-color);
+    border-radius: 0 0 20px 20px;
+    margin-top: -20px;
+}
+
+.actions .dropdown-content a {
+    color: black;
+    padding: 6px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.actions .dropdown-content a:hover {
+    color: var(--blue-color);
+}
+.actions .dropdown-content a:active {
+    color: white;   
+}
+/* Afficher le menu au clic */
+.actions .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* Réorganiser le layout pour les petits écrans */
+@media (max-width: 910px) {
+    .container {
+        grid-template-columns: 1fr; /* Met tout en une seule colonne */
+        grid-template-rows: auto auto auto; /* Trois lignes */
+
+    }
+
+    .user-table {
+        grid-row-start: 3;
+
+        margin-top: 20px; /* Un peu d'espacement au-dessus */
+    }
 }

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Acceuil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_pannel/admin_navbar.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    {{ chart.alert_evolution|json_script:"alert-evolution-data" }}
+    {{ chart.alert_type|json_script:"alert-type-data" }}
+    {{ chart.ia_stats|json_script:"ia-data" }}
+    {{ chart.agent_stats|json_script:"agent-data" }}
+    <script src="{% static 'dashboard/charts.js' %}" defer></script>
+    <script>
+        const ADD_USER_URL = "{% url 'add_user' %}";
+        const DELETE_USER_BASE_URL = "{% url 'delete_user' 0 %}".replace("0/", "");
+    </script>
+
+    <script src="{% static 'admin_pannel/admin_pannel.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+
+{% include "admin_pannel/admin_navbar.html" %}
+
+
+<div class="user-infos">
+    <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users
+            </div>
+            <div class="stats-user-number">
+                <span id="userCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users admin
+            </div>
+            <div class="stats-user-number">
+                <span id="adminCount">0</span>
+            </div>
+        </div>
+    </div>
+    <div class="card admin-infos-create">
+        <h2>Créer / Éditer</h2>
+        <form method="POST" id="userForm">
+            {% csrf_token %}
+            <label for=firstname>Firstname</label>
+            <input type="text" name="firstname" id="firstname" required>
+            <label for=lastname>Lastname</label>
+            <input type="text" name="lastname" id="lastname" required>
+            <label for=email>Email</label>
+            <input type="email" name="email" id="email" required>
+            <label for="is_staff">Admin</label>
+           <label class="switch">
+              <input type="checkbox" id="is_staff" name="is_staff">
+              <span class="slider round"></span>
+            </label>
+            <label for=password>Password</label>
+            <input type="password" name="password" id="password" required>
+            <button type="submit">Créer / Éditer</button>
+        </form>
+    </div>
+</div>
+<div class=" card user-table">
+    <h2>Utilisateurs</h2>
+    <hr>
+    <table class="table" id="userTable">
+        <thead>
+        <tr>
+            <th class="align-left" scope="col">ID</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+              <tr data-id="{{ user.id }}" data-is-staff="{{ user.is_staff|yesno:"true,false" }}">
+                  <td class="id">{{ user.id }}</td>
+                  <td class="firstname">{{ user.first_name }}</td>
+                  <td class="lastname">{{ user.last_name }}</td>
+                  <td class="email">{{ user.email }}</td>
+                  <td class="is_staff">{% if user.is_staff %}Oui{% else %}Non{% endif %}</td>
+                    <td class="actions">
+                      <div class="dropdown">
+                        <p class="dropbtn">
+                          <iconify-icon icon="fluent:more-horizontal-32-filled" width="15" height="15"></iconify-icon>
+                        </p>
+                        <div class="dropdown-content">
+                            <a href="#" class="edit-user" data-id="${data.id}">Éditer</a>
+                            <a href="#" class="delete-user" data-id="${data.id}">Supprimer</a>
+                        </div>
+                      </div>
+                    </td>
+
+              </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

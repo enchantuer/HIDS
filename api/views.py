@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-
 from api.models import Agent, Alert
 from api.models import get_stats as api_get_stats
 from datetime import datetime
 from django.core.paginator import Paginator
 from django.db.models import Q
-
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
 
 def str_to_bool(value):
     if value is None:
@@ -16,7 +12,6 @@ def str_to_bool(value):
     return value.lower() in ["true", "1", "yes"]
 
 # Create your views here.
-@login_required(login_url=reverse_lazy("login"))
 def get_agents(request):
     # Récupérer les filtres optionnels
     id = request.GET.get('id')
@@ -72,7 +67,6 @@ def get_agents(request):
         }
     })
 
-@login_required(login_url=reverse_lazy("login"))
 def get_alerts(request):
     # Récupérer les filtres optionnels
     id = request.GET.get('id')
@@ -142,6 +136,5 @@ def get_alerts(request):
         }
     })
 
-@login_required(login_url=reverse_lazy("login"))
 def get_stats(request):
     return JsonResponse(api_get_stats())

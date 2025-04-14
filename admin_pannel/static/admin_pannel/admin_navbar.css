@@ -1,0 +1,81 @@
+
+.navbar-admin {
+    text-align: center;
+    background-color: var(--background-color);
+    display: grid;
+    padding-inline: 1.25rem;
+    margin: auto;
+    align-items: center;
+    grid-column: span 2 / span 2;
+}
+
+
+.navbar-admin-bar {
+    height: 1.25rem;
+    width: 2px;
+    background-color: white;
+}
+
+.navbar-admin-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+.navbar-admin-tabs a {
+    text-decoration: none;
+    display: block;
+}
+
+.navbar-admin-tabs-bloc {
+    cursor: pointer;
+    /* autres styles comme padding, background, etc. */
+}
+.admin-home{
+    max-width: 20rem ;
+}
+
+.navbar-admin-tabs-bloc {
+    color: var(--on-secondary-color);
+    background-color: white;
+    width: 7.5rem;
+    height: 1.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: skew(-20deg);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.navbar-admin-tabs-bloc[aria-current="page"] {
+    background-color: var(--blue-color);
+    color: var(--primary-color);
+}
+
+.navbar-admin-tabs-bloc p {
+    transform: skew(20deg);
+    align-self: center;
+    font-size: 1rem; /* 15px -> 1rem */
+}
+
+.navbar-admin-tabs-bloc:hover {
+    background-color: var(--dark-blue-color);
+    color: var(--primary-color);
+}
+.navbar-admin-tabs-bloc:active {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+}
+
+.navbar-admin-home{
+    width: 1.75rem ;
+}
+
+
+.navbar-admin .active {
+    background-color: var(--blue-color);
+    color: var(--primary-color);
+}
+.navbar-admin .active:hover {
+    background-color: var(--dark-blue-color);
+    color: var(--primary-color);
+}
