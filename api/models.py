@@ -24,6 +24,7 @@ class Agent(models.Model):
     add_date = models.DateTimeField(auto_now_add=True)
     system =models.CharField(max_length=50)
     adresse = models.CharField(max_length=100)
+    token_hash = models.CharField(max_length=100)
     down = models.BooleanField(default=False)
 
     def __str__(self):
