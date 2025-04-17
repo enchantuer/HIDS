@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Acceuil admin{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/style.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/admin_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/admin_home.css' %}">
+    <script>
+        const ADD_USER_URL = "{% url 'add_user' %}";
+        const DELETE_USER_BASE_URL = "{% url 'delete_user' 0 %}".replace("0/", "");
+    </script>
+
+    <script src="{% static 'admin_panel/admin_home.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+
+{% include "admin_panel/admin_navbar.html" %}
+
+<div class="admin_logo">
+    <img src="../static/images/logo.png" class="card">
+</div>
+<div class="admin_infos user-infos">
+        <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users
+            </div>
+            <div class="stats-user-number">
+                <span id="userCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Users admin
+            </div>
+            <div class="stats-user-number">
+                <span id="adminCount">0</span>
+            </div>
+        </div>
+    </div>
+    <div class="card user-infos-stats">
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents
+            </div>
+            <div class="stats-user-number">
+                <span id="agentCount">0</span>
+            </div>
+        </div>
+        <div class="stats-user">
+            <div class="stats-user-nom">
+                Agents down
+            </div>
+            <div class="stats-user-number">
+                <span id="agentDownCount">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
