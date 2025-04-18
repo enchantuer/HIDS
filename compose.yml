@@ -41,6 +41,20 @@ services:
     build: ./client
     depends_on:
       - django_app
+    environment:
+      NAME: "client1"
+    volumes:
+      - ./client/dossier_local:/app/dossier_local
+      - ./certs:/app/certs
+    profiles:
+      - agents
+
+  client2:
+    build: ./client
+    depends_on:
+      - django_app
+    environment:
+      NAME: "client2"
     volumes:
       - ./client/dossier_local:/app/dossier_local
       - ./certs:/app/certs
