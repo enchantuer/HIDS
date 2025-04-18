@@ -112,6 +112,7 @@ if __name__ == '__main__':
 
                 # Send the file to the server and save it in the directory
                 # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                send_alert(new_filename)
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
@@ -129,6 +130,7 @@ if __name__ == '__main__':
 
                 # Send the file to the server and save it in the directory
                 # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                send_alert(new_filename)
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
@@ -145,6 +147,7 @@ if __name__ == '__main__':
 
                 # Send the file to the server and save it in the directory
                 # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                send_alert(new_filename)
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
@@ -162,6 +165,7 @@ if __name__ == '__main__':
 
                 # Send the file to the server and save it in the directory
                 # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                send_alert(new_filename)
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
@@ -178,6 +182,7 @@ if __name__ == '__main__':
 
                 # Send the file to the server and save it in the directory
                 # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                send_alert(new_filename)
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
@@ -195,6 +200,7 @@ if __name__ == '__main__':
 
                     # Send the file to the server and save it in the directory
                     # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                    send_alert(new_filename)
                     shutil.move(new_filename, save_dir_alert)
 
                     flag = True
@@ -210,6 +216,7 @@ if __name__ == '__main__':
 
                     # Send the file to the server and save it in the directory
                     # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                    send_alert(new_filename)
                     shutil.move(new_filename, save_dir_alert)
 
                     flag = True
