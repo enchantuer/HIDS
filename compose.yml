@@ -43,6 +43,10 @@ services:
       - django_app
     environment:
       NAME: "client1"
+      VT_API_KEY: ${AGENT_VT_API_KEY}
+      ABUSEIPDB_API_KEY: ${AGENT_ABUSEIPDB_API_KEY}
+    env_file:
+      - .env
     volumes:
       - ./client1:/app/dossier_local
       - ./certs:/app/certs

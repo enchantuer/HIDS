@@ -1,0 +1,7 @@
+{
+  "LOCAL": true,
+  "ONLINE": true,
+  "IA": true,
+  "RANDOM_FOREST": true,
+  "SUPPORT_VECTOR_MACHINE": true
+}
