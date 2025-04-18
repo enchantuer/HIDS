@@ -78,13 +78,36 @@ def signer_csr(csr_pem_path, ip, ca_cert_path = CA_FILE, ca_key_path = CA_KEY_FI
 
     return certificate_pem
 
+def handle_cert_request(conn):
+    try:
+        # 1. Recevoir la CSR du client (demande de certificat)
+        csr_length = int.from_bytes(conn.recv(4), "big")
+        csr_data = conn.recv(csr_length)
+
+        if not csr_data:
+            print("[!] Aucun CSR reçu.")
+            return
+
+        print("[✓] CSR reçu.")
+
+        # 2. Signer le CSR et obtenir le certificat signé
+        signed_cert = signer_csr(csr_data)
+
+        # 3. Renvoyer le certificat signé au client
+        cert_length = len(signed_cert).to_bytes(4, "big")
+        conn.sendall(cert_length + signed_cert.encode())
+
+        print("[✓] Certificat signé renvoyé au client.")
+
+    except Exception as e:
+        print(f"[!] Erreur lors du traitement de la demande de certificat : {e}")
 
 # Configuration TLS
 def create_ssl_context():
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)
     context.load_verify_locations(CA_FILE)
-    context.verify_mode = ssl.CERT_REQUIRED  # Requires a client certificate
+    context.verify_mode = ssl.CERT_OPTIONAL
     return context
 
 packet_count = 0
@@ -219,29 +242,33 @@ def start_server():
         while True :
             conn, addr = secure_socket.accept()
 
-            cert_info = conn.getpeercert()
-            subject = dict(x[0] for x in cert_info['subject'])
-            cn = subject.get('commonName')
-
             print(f" Connexion sécurisée depuis {addr}", flush=True)
             try:
-                agent = Agent.objects.get(common_name=cn)
-                if not agent:
-                    continue
-                # Get the message type (max size : 256 octets)
-                com_type = conn.recv(256)
-                if not com_type:
-                    conn.close()
-                    continue
-                com_type = com_type.rstrip(b'\0').decode()
-                if com_type == "ALERT":
-                    # Receive the file of the client
-                    receive_alert(conn, agent)
-                if com_type == "CONNECTION":
-                    agent.adresse = addr
-                    agent.save()
+                cert_info = conn.getpeercert()
+                if not cert_info:
+                    # 5. Si le client ne présente pas de certificat, envoyer une demande de certificat
+                    print("[*] Aucun certificat reçu, demande de certificat.")
+                    handle_cert_request(conn)
 
-                    check_update(conn)
+                else:
+                    subject = dict(x[0] for x in cert_info['subject'])
+                    cn = subject.get('commonName')
+
+                    agent = Agent.objects.get(common_name=cn)
+                    if agent:
+                        # Get the message type (max size : 256 octets)
+                        com_type = conn.recv(256)
+                        if not com_type:
+                            continue
+                        com_type = com_type.rstrip(b'\0').decode()
+                        if com_type == "ALERT":
+                            # Receive the file of the client
+                            receive_alert(conn, agent)
+                        if com_type == "CONNECTION":
+                            agent.adresse = addr
+                            agent.save()
+
+                            check_update(conn)
 
             # Send a file to the client
                 #send_file(conn, "file_from_server.txt")

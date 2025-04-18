@@ -1,3 +1,5 @@
+import hashlib
+import json
 import socket
 import ssl
 import os
@@ -22,6 +24,20 @@ def create_ssl_context():
     context.load_verify_locations(CA_FILE)
     return context
 
+def compute_sha256(file_path):
+    h = hashlib.sha256()
+    with open(file_path, 'rb') as f:
+        while chunk := f.read(4096):
+            h.update(chunk)
+    return h.hexdigest()
+
+def get_local_hashes(folder_path):
+    hashes = {}
+    for filename in os.listdir(folder_path):
+        full_path = os.path.join(folder_path, filename)
+        if os.path.isfile(full_path):
+            hashes[filename] = compute_sha256(full_path)
+    return hashes
 
 # Function to send a file to the server
 def send_file(conn, file_path):
@@ -69,6 +85,35 @@ def start_client(file_to_send):
 
             # Receive a file
             # receive_file(secure_sock)
+
+            # 📥 Recevoir les hashes
+            length = int.from_bytes(secure_sock.recv(4), "big")
+            hashes_json = secure_sock.recv(length)
+            server_hashes = json.loads(hashes_json.decode())
+
+            local_hashes = get_local_hashes("dossier_local")
+            to_request = []
+
+            for fname, remote_hash in server_hashes.items():
+                local_hash = local_hashes.get(fname)
+                if local_hash != remote_hash:
+                    to_request.append(fname)
+
+            # 📤 Envoyer la liste au serveur
+            missing_json = json.dumps(to_request).encode()
+            secure_sock.sendall(len(missing_json).to_bytes(4, 'big') + missing_json)
+
+            # 📥 Recevoir les fichiers
+            while to_request:
+                name_len = int.from_bytes(secure_sock.recv(2), "big")
+                filename = secure_sock.recv(name_len).decode()
+                data_len = int.from_bytes(secure_sock.recv(4), "big")
+                data = secure_sock.recv(data_len)
+
+                with open(os.path.join("dossier_local", filename), "wb") as f:
+                    f.write(data)
+                print(f" ✓ Fichier reçu : {filename}")
+                to_request.remove(filename)
 
 
 if __name__ == "__main__":
