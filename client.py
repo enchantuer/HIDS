@@ -12,13 +12,14 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization, hashes
 
 # Configuration
-SERVER_HOST, SERVER_PORT = "server", 4433  # IP du serveur
+SERVER_HOST, SERVER_PORT = "django_app", 4433  # IP du serveur
 # SERVER_HOST, SERVER_PORT = "172.20.10.6", 4433  # IP du serveur
 CERT_FILE = "certs/client1_cert.pem"
 KEY_FILE = "certs/client1_key.pem"
 CA_FILE = "certs/ca_cert.pem"
 CSR_FILE = "certs/client.csr"
 SAVE_DIR = os.path.expanduser("Fichiers_recus")  # Dossier où enregistrer les fichiers reçus
+APP_DIR = "dossier_local"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 print(os.path.dirname(os.path.abspath(__file__)), flush=True)
@@ -63,11 +64,13 @@ def compute_sha256(file_path):
 
 def get_local_hashes(folder_path):
     hashes = {}
-    for filename in os.listdir(folder_path):
-        full_path = os.path.join(folder_path, filename)
-        if os.path.isfile(full_path):
-            hashes[filename] = compute_sha256(full_path)
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            full_path = os.path.join(root, file)
+            relative_path = os.path.relpath(full_path, folder_path)
+            hashes[relative_path] = compute_sha256(full_path)
     return hashes
+
 
 def send_csr_and_receive_cert():
     # Connexion non sécurisée temporaire pour l'envoi de la CSR
@@ -92,8 +95,7 @@ def send_file(conn, file_path):
     if os.path.exists(file_path):
         # Type de communication
         com_type = "ALERT".encode()
-        # Envoyer le nom du fichier en 256 octets (paddé si nécessaire)
-        com_type_padded = com_type.ljust(256, b'\0')
+        com_type_padded = com_type.ljust(32, b'\0')
         conn.sendall(com_type_padded)
 
         # Nom du fichier (nom brut, pas le chemin complet)
@@ -119,6 +121,42 @@ def receive_file(conn):
             f.write(chunk)
     print(f" File received and saved in {received_file_path}")
 
+def get_updated_files(conn):
+    # Type de communication
+    com_type = "CONNECTION".encode()
+    com_type_padded = com_type.ljust(32, b'\0')
+    conn.sendall(com_type_padded)
+    # 📥 Recevoir les hashes
+    length = int.from_bytes(conn.recv(4), "big")
+    hashes_json = conn.recv(length)
+    server_hashes = json.loads(hashes_json.decode())
+
+    local_hashes = get_local_hashes(APP_DIR)
+    to_request = []
+
+    for fname, remote_hash in server_hashes.items():
+        local_hash = local_hashes.get(fname)
+        if local_hash != remote_hash:
+            to_request.append(fname)
+
+    # 📤 Envoyer la liste au serveur
+    missing_json = json.dumps(to_request).encode()
+    conn.sendall(len(missing_json).to_bytes(4, 'big') + missing_json)
+
+    # 📥 Recevoir les fichiers
+    while to_request:
+        name_len = int.from_bytes(conn.recv(2), "big")
+        filename = conn.recv(name_len).decode()
+        data_len = int.from_bytes(conn.recv(4), "big")
+        data = conn.recv(data_len)
+
+        full_path = os.path.join(APP_DIR, filename)
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+        with open(full_path, "wb") as f:
+            f.write(data)
+
+        print(f" ✓ Fichier reçu : {filename}")
+        to_request.remove(filename)
 
 # Function to start the client
 def start_client(file_to_send):
@@ -134,39 +172,12 @@ def start_client(file_to_send):
             print(" Secure connexion established with the server.")
 
             # Send the file
-            send_file(secure_sock, file_to_send)
+            # send_file(secure_sock, file_to_send)
 
             # Receive a file
             # receive_file(secure_sock)
 
-            # 📥 Recevoir les hashes
-            length = int.from_bytes(secure_sock.recv(4), "big")
-            hashes_json = secure_sock.recv(length)
-            server_hashes = json.loads(hashes_json.decode())
-
-            local_hashes = get_local_hashes("dossier_local")
-            to_request = []
-
-            for fname, remote_hash in server_hashes.items():
-                local_hash = local_hashes.get(fname)
-                if local_hash != remote_hash:
-                    to_request.append(fname)
-
-            # 📤 Envoyer la liste au serveur
-            missing_json = json.dumps(to_request).encode()
-            secure_sock.sendall(len(missing_json).to_bytes(4, 'big') + missing_json)
-
-            # 📥 Recevoir les fichiers
-            while to_request:
-                name_len = int.from_bytes(secure_sock.recv(2), "big")
-                filename = secure_sock.recv(name_len).decode()
-                data_len = int.from_bytes(secure_sock.recv(4), "big")
-                data = secure_sock.recv(data_len)
-
-                with open(os.path.join("dossier_local", filename), "wb") as f:
-                    f.write(data)
-                print(f" ✓ Fichier reçu : {filename}")
-                to_request.remove(filename)
+            get_updated_files(secure_sock)
 
 
 if __name__ == "__main__":

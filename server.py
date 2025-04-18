@@ -14,7 +14,7 @@ from api.models import Alert, Agent
 
 
 # Configuration
-HOST, PORT = "127.0.0.1", 4433
+HOST, PORT = "django_app", 4433
 CERT_FILE = "certs/server_cert.pem"
 KEY_FILE = "certs/server_key.pem"
 CA_FILE = "certs/ca_cert.pem"
@@ -145,7 +145,7 @@ def receive_alert(conn, agent):
     try:
         while True:
             # Read the name of the file (max size : 256 octets)
-            filename_padded = conn.recv(256)
+            filename_padded = conn.recv(32)
             if not filename_padded:
                 break
             filename = filename_padded.rstrip(b'\0').decode()
@@ -203,10 +203,11 @@ def compute_sha256(file_path):
 
 def get_file_hashes(folder_path):
     hashes = {}
-    for filename in os.listdir(folder_path):
-        full_path = os.path.join(folder_path, filename)
-        if os.path.isfile(full_path):
-            hashes[filename] = compute_sha256(full_path)
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            full_path = os.path.join(root, file)
+            relative_path = os.path.relpath(full_path, folder_path)
+            hashes[relative_path] = compute_sha256(full_path)
     return hashes
 
 def check_update(conn):
@@ -219,13 +220,13 @@ def check_update(conn):
     missing_json = conn.recv(length)
     missing_files = json.loads(missing_json.decode())
 
-    print(" Fichiers demandés :", missing_files)
+    print(" Fichiers demandés :", missing_files, flush=True)
 
     for filename in missing_files:
         full_path = os.path.join(folder, filename)
         with open(full_path, "rb") as f:
             data = f.read()
-            conn.sendall(len(filename).to_bytes(2, 'big') + filename.encode())
+            conn.sendall(len(filename.encode()).to_bytes(2, 'big') + filename.encode())
             conn.sendall(len(data).to_bytes(4, 'big') + data)
 
 
@@ -254,22 +255,22 @@ def start_server():
                 else:
                     subject = dict(x[0] for x in cert_info['subject'])
                     cn = subject.get('commonName')
-
                     agent = Agent.objects.get(common_name=cn)
+                    print(f" Agent : {agent.name}", flush=True)
                     if agent:
                         # Get the message type (max size : 256 octets)
                         com_type = conn.recv(256)
-                        if not com_type:
-                            continue
-                        com_type = com_type.rstrip(b'\0').decode()
-                        if com_type == "ALERT":
-                            # Receive the file of the client
-                            receive_alert(conn, agent)
-                        if com_type == "CONNECTION":
-                            agent.adresse = addr
-                            agent.save()
-
-                            check_update(conn)
+                        print("com_type :", com_type, flush=True)
+                        if com_type:
+                            com_type = com_type.rstrip(b'\0').decode()
+                            if com_type == "ALERT":
+                                # Receive the file of the client
+                                receive_alert(conn, agent)
+                            if com_type == "CONNECTION":
+                                agent.adresse = addr
+                                agent.save()
+                                print(f" Agent : {agent.name}, ip updated", flush=True)
+                                check_update(conn)
 
             # Send a file to the client
                 #send_file(conn, "file_from_server.txt")
