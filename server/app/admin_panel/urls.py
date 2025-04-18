@@ -17,4 +17,6 @@ urlpatterns = [
     path('add_agent/', views.add_agent, name='add_agent'),
     path('delete_agent/<int:agent_id>/', views.delete_agent, name='delete_agent'),
     path('get_agent_counts/', views.get_agent_counts, name='get_agent_counts'),
+    path('update_config/', views.update_config, name='update_config'),
+    path('get_config/', views.get_config, name='get_config'),
 ]

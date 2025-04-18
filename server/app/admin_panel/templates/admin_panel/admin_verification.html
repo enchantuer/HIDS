@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{% static 'admin_panel/admin_verification.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/admin_navbar.css' %}">
     <script src="{% static 'admin_panel/admin_verification.js' %}"></script>
+        <script>
+        const UPDATE_CONFIG = "{% url 'update_config' %}";
+        const GET_CONFIG = "{% url 'get_config'%}";
+    </script>
 
 {% endblock %}
 {% block content %}
@@ -32,12 +36,6 @@
             <p>Snort</p>
             <label class="switch">
                 <input type="checkbox" id="snort" name="snort"><span class="slider round"></span>
-            </label>
-        </div>
-        <div class="verif">
-            <p>Custom</p>
-            <label class="switch">
-                <input type="checkbox" id="custom" name="custom"><span class="slider round"></span>
             </label>
         </div>
 

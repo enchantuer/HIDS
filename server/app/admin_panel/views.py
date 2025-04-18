@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 import json
+import os
+
 
 @staff_member_required
 def admin_panel(request):
@@ -172,3 +174,46 @@ def get_agent_counts(request):
     actif = Agent.objects.filter(down=True).count()
     inactif = Agent.objects.filter(down=False).count()
     return JsonResponse({'actifCount': actif, 'inactifCount': inactif})
+
+@staff_member_required
+def update_config(request):
+    with open('dossier_partage/config.json', 'r') as f:
+       data = json.load(f)
+    key = request.POST.get('editKey')
+    print("Key:", key)
+    if key == "yara":
+        data['YARA'] = not data['YARA']
+    elif key == "suricata":
+        data['SURICATA'] = not data['SURICATA']
+    elif key == "snort":
+        data['SNORT'] = not data['SNORT']
+    elif key == "virustotal":
+        data['VIRUS_TOTAL'] = not data['VIRUS_TOTAL']
+    elif key == "ipdb":
+        data['IPDB'] = not data['IPDB']
+    elif key == "custom":
+        data['LOCAL'] = not data['LOCAL']
+    elif key == "ope":
+        data['IA'] = not data['IA']
+    elif key == "modele1":
+        data['RANDOM_FOREST'] = not data['RANDOM_FOREST']
+    elif key == "modele2":
+        data['SUPPORT_VECTOR_MACHINE'] = not data['SUPPORT_VECTOR_MACHINE']
+    else:
+        return JsonResponse({'error': f"Clé '{key}' inconnue"}, status=400)
+
+    print("Data:", data)
+    with open('dossier_partage/config.json', 'w') as f:
+        json.dump(data, f, indent=4)
+    return JsonResponse({'success': True}, status=200)
+
+@staff_member_required
+def get_config(request):
+    config_path = 'dossier_partage/config.json'
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        return JsonResponse(config)
+    except Exception as e:
+        print(f"Erreur lors de la lecture du fichier de configuration : {e}")
+        return JsonResponse({'error': str(e)}, status=500)
