@@ -5,8 +5,11 @@ CONFIG_PATH = "config.json"
 
 # Valeurs par défaut au cas où le fichier est absent
 default_config = {
-    "LOCAL": True,
-    "ONLINE": True,
+    "YARA": True,
+    "SURICATA": True,
+    "SNORT": True,
+    "VIRUS_TOTAL": True,
+    "IPDB": True,
     "IA": True,
     "RANDOM_FOREST": True,
     "SUPPORT_VECTOR_MACHINE": True
@@ -23,8 +26,10 @@ else:
 config = {**default_config, **user_config}
 
 # Utilisable ailleurs
-LOCAL = config["LOCAL"]
-ONLINE = config["ONLINE"]
+YARA = config["YARA"],
+SURICATA = config["SURICATA"],
+VIRUS_TOTAL = config["VIRUS_TOTAL"],
+IPDB = config["IPDB"],
 IA = config["IA"]
 RANDOM_FOREST = config["RANDOM_FOREST"]
 SUPPORT_VECTOR_MACHINE = config["SUPPORT_VECTOR_MACHINE"]

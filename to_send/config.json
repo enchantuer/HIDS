@@ -1,6 +1,9 @@
 {
-  "LOCAL": true,
-  "ONLINE": true,
+  "YARA": true,
+  "SURICATA": true,
+  "SNORT": true,
+  "VIRUS_TOTAL": true,
+  "IPDB": true,
   "IA": true,
   "RANDOM_FOREST": true,
   "SUPPORT_VECTOR_MACHINE": true
