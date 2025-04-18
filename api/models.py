@@ -21,10 +21,11 @@ def send_stats(channel_layer):
 # Create your models here.
 class Agent(models.Model):
     name = models.CharField(max_length=60)
+    common_name = models.CharField(max_length=60)
     add_date = models.DateTimeField(auto_now_add=True)
     system =models.CharField(max_length=50)
     adresse = models.CharField(max_length=100)
-    token_hash = models.CharField(max_length=100)
+    certificate = models.FileField(upload_to="certificates/", null=True, blank=True)
     down = models.BooleanField(default=False)
 
     def __str__(self):
