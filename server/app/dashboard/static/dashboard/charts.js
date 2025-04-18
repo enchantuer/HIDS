@@ -157,6 +157,7 @@ const IA = document.querySelector('#ia-stats-chart');
 const IAData = JSON.parse(
     document.querySelector('#ia-data').textContent
 )
+console.log(IAData)
 const dataIA = {
   labels: IAData.labels,
   datasets: [{
@@ -169,16 +170,6 @@ const dataIA = {
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgb(255, 99, 132)'
-  }, {
-    label: IAData.data[1].name,
-    data: IAData.data[1].data,
-    fill: true,
-    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    borderColor: 'rgb(54, 162, 235)',
-    pointBackgroundColor: 'rgb(54, 162, 235)',
-    pointBorderColor: '#fff',
-    pointHoverBackgroundColor: '#fff',
-    pointHoverBorderColor: 'rgb(54, 162, 235)'
   }]
 };
 

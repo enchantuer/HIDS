@@ -109,15 +109,13 @@ def index(request):
         data = [entry["total"] for entry in ia_alerts]
 
         return {
-            "ia_stats": {
-                "labels": labels,
-                "data": [
-                    {
-                        "name": "IA Alerts",
-                        "data": data
-                    }
-                ]
-            }
+            "labels": labels,
+            "data": [
+                {
+                    "name": "Nombre d'alertes",
+                    "data": data
+                }
+            ]
         }
 
     context = {
@@ -125,19 +123,6 @@ def index(request):
             "alert_type": alert_count_per_type(),
             "agent_stats": agent_stats(24),
             "ia_stats": get_ia_alert_stats(),
-            #   {
-            #     "labels": [],
-            #     "data": [
-            #         {
-            #             "name": "Model 1",
-            #             "data": [65, 59, 90, 81, 56, 55, 40]
-            #         },
-            #         {
-            #             "name": "Model 2",
-            #             "data": [28, 48, 40, 19, 96, 27, 100]
-            #         }
-            #     ]
-            # },
             "alert_evolution": alert_count_per_hour(7),
         }
     }

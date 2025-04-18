@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/admin_verification.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/admin_navbar.css' %}">
-    <script src="{% static 'admin_panel/admin_verification.js' %}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="{% static 'admin_panel/admin_verification.js' %}" defer></script>
+    {{ chart.ia_stats|json_script:"ia-data" }}
 {% endblock %}
 {% block content %}
 
@@ -69,10 +71,10 @@
     </div>
 </div>
 <div class="card ia">
-    <h2>Ia</h2>
+    <h2>IA</h2>
     <div class="orga-ia">
         <div class="stat-ia">
-            hey
+            <canvas class="chart" id="ia-stats-chart"></canvas>
         </div>
         <div class="ligne-ia">
 
