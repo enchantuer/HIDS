@@ -28,6 +28,7 @@ config = {**default_config, **user_config}
 # Utilisable ailleurs
 YARA = config["YARA"],
 SURICATA = config["SURICATA"],
+SNORT = config["SNORT"],
 VIRUS_TOTAL = config["VIRUS_TOTAL"],
 IPDB = config["IPDB"],
 IA = config["IA"]

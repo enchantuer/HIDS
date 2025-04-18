@@ -47,5 +47,5 @@ def analyse_pcap_with_abuseIPDB(pcap_file):
                 return alert
                 
 
-alert= analyse_pcap_with_abuseIPDB("../../Téléchargements/Extrait/ext_10.pcap")
-print(alert)
+# alert= analyse_pcap_with_abuseIPDB("../../Téléchargements/Extrait/ext_10.pcap")
+# print(alert)

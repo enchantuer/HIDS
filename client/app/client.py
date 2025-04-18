@@ -7,19 +7,15 @@ import re
 import shutil
 
 import retrieve_requests
-import local.analyse_suricata as analyse_suricata
-import local.analyse_yara as analyse_yara
-import local.analyse_snort as analyse_snort
-import online.analyse_VT as analyse_VT
-import online.analyse_AbuseIPDB as analyse_AbuseIPDB
-import ia.predict as predict
+import dossier_local.local.analyse_suricata as analyse_suricata
+import dossier_local.local.analyse_yara as analyse_yara
+import dossier_local.local.analyse_snort as analyse_snort
+import dossier_local.online.analyse_VT as analyse_VT
+import dossier_local.online.analyse_AbuseIPDB as analyse_AbuseIPDB
+import dossier_local.ia.predict as predict
 
-from get_update import start_client as get_update
 from send_alert import start_client as send_alert
 from config import YARA, SNORT, SURICATA,  VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE
-
-get_update()
-send_alert("source1_type1.pcap")
 
 # Configuration
 ID_ALERT_FILE = "id_alert.txt"
@@ -87,16 +83,14 @@ def rename_pcap(name_alert, methode, filename):
 
     return new_filepath
 
-
-if __name__ == '__main__':
-
+def run():
     while True:
 
         # ---Get PCAP file---
-        print("---------------------")
         filename = retrieve_requests.get_pcap_file()
         if filename == None:
-            break
+            continue
+        print("---------------------")
         # Put the flag to false = no alert detected
         flag = False
 
@@ -227,3 +221,6 @@ if __name__ == '__main__':
         if flag == False:
             os.remove(filename)
             print(f"No alert detected on {filename}")
+
+if __name__ == '__main__':
+    run()

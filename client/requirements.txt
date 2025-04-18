@@ -1,1 +1,8 @@
 cryptography~=44.0.2
+scapy
+yara-python
+pyshark
+requests
+numpy
+pandas
+tqdm
