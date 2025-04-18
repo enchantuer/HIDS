@@ -6,6 +6,8 @@ from django.shortcuts import render
 import json
 import os
 
+from api.models import Alert
+from django.db.models import Count
 
 @staff_member_required
 def admin_panel(request):
@@ -19,7 +21,35 @@ def utilisateurs(request):
 
 @staff_member_required
 def verification(request):
-    return render(request, 'admin_panel/admin_verification.html', {'active_page': 'Verification'})
+    def get_ia_alert_stats():
+        # Filtrer toutes les alertes IA et grouper par type
+        ia_alerts = (
+            Alert.objects.filter(source__icontains="ia")
+            .values("type")
+            .annotate(total=Count("id"))
+        )
+
+        # Construction du format demandé
+        labels = [entry["type"] for entry in ia_alerts]
+        data = [entry["total"] for entry in ia_alerts]
+
+        return {
+            "labels": labels,
+            "data": [
+                {
+                    "name": "Nombre d'alertes",
+                    "data": data
+                }
+            ]
+        }
+
+    context = {
+        "active_page": "Verification",
+        "chart": {
+            "ia_stats": get_ia_alert_stats()
+        }
+    }
+    return render(request, 'admin_panel/admin_verification.html', context)
 
 @staff_member_required
 def add_user(request):
@@ -102,7 +132,7 @@ def delete_user(request, user_id):
 @staff_member_required
 def get_user_counts(request):
     admin_count = User.objects.filter(is_staff=True).count()
-    user_count = User.objects.filter(is_staff=False).count()
+    user_count = User.objects.count()
     return JsonResponse({
         'adminCount': admin_count,
         'userCount': user_count

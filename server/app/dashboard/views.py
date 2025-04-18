@@ -96,20 +96,33 @@ def index(request):
             }
         ]
 
+    def get_ia_alert_stats():
+        # Filtrer toutes les alertes IA et grouper par type
+        ia_alerts = (
+            Alert.objects.filter(source__icontains="ia")
+            .values("type")
+            .annotate(total=Count("id"))
+        )
+
+        # Construction du format demandé
+        labels = [entry["type"] for entry in ia_alerts]
+        data = [entry["total"] for entry in ia_alerts]
+
+        return {
+            "labels": labels,
+            "data": [
+                {
+                    "name": "Nombre d'alertes",
+                    "data": data
+                }
+            ]
+        }
+
     context = {
         "chart": {
             "alert_type": alert_count_per_type(),
             "agent_stats": agent_stats(24),
-            "ia_stats": [
-                {
-                    "name": "Model 1",
-                    "data": [65, 59, 90, 81, 56, 55, 40]
-                },
-                {
-                    "name": "Model 2",
-                    "data": [28, 48, 40, 19, 96, 27, 100]
-                }
-            ],
+            "ia_stats": get_ia_alert_stats(),
             "alert_evolution": alert_count_per_hour(7),
         }
     }

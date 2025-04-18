@@ -29,30 +29,25 @@
             <div class="dropdown-content">
                 <div class="dropdown-category">Local</div>
                 <label for="yara">Yara</label>
-                <input type="checkbox" name="source" id="yara" value="yara">
+                <input type="checkbox" name="source" id="yara" value="local_yara">
                 <br>
-                <label for="suricate">Suricate</label>
-                <input type="checkbox" name="source" id="suricate" value="suricate">
+                <label for="suricate">Suricata</label>
+                <input type="checkbox" name="source" id="suricate" value="local_suricata">
                 <br>
                 <label for="snort">Snort</label>
-                <input type="checkbox" name="source" id="snort" value="snort">
-                <br>
-                <label for="custom">Custom</label>
-                <input type="checkbox" name="source" id="custom" value="custom">
+                <input type="checkbox" name="source" id="snort" value="local_snort">
 
                 <div class="dropdown-category">Cloud</div>
                 <label for="virus-total">Virus Total</label>
-                <input type="checkbox" name="source" id="virus-total" value="virus-total">
+                <input type="checkbox" name="source" id="virus-total" value="online_virustotal">
                 <label for="IPDB">IPDB</label>
-                <input type="checkbox" name="source" id="IPDB" value="IPDB">
-                <label for="OPE">OPE</label>
-                <input type="checkbox" name="source" id="OPE" value="OPE">
+                <input type="checkbox" name="source" id="IPDB" value="online_abuseIPDB">
 
                 <div class="dropdown-category">IA</div>
-                <label for="IA-1">IA 1</label>
-                <input type="checkbox" name="source" id="IA-1" value="IA-1">
-                <label for="IA-2">IA 2</label>
-                <input type="checkbox" name="source" id="IA-2" value="IA-2">
+                <label for="IA-1">IA Random Forest</label>
+                <input type="checkbox" name="source" id="IA-1" value="ia_random_forest">
+                <label for="IA-2">IA SVM</label>
+                <input type="checkbox" name="source" id="IA-2" value="ia_support_vector_machine">
             </div>
         </div>
 

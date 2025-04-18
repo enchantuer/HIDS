@@ -157,19 +157,12 @@ const IA = document.querySelector('#ia-stats-chart');
 const IAData = JSON.parse(
     document.querySelector('#ia-data').textContent
 )
+console.log(IAData)
 const dataIA = {
-  labels: [
-    'BotNet',
-    'DOS 1',
-    'DOS 2',
-    'DDOS 2',
-    'DDOS 1',
-    'BruteForce',
-    'Phishing'
-  ],
+  labels: IAData.labels,
   datasets: [{
-    label: IAData[0].name,
-    data: IAData[0].data,
+    label: IAData.data[0].name,
+    data: IAData.data[0].data,
     fill: true,
     backgroundColor: 'rgba(255, 99, 132, 0.2)',
     borderColor: 'rgb(255, 99, 132)',
@@ -177,16 +170,6 @@ const dataIA = {
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgb(255, 99, 132)'
-  }, {
-    label: IAData[1].name,
-    data: IAData[1].data,
-    fill: true,
-    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    borderColor: 'rgb(54, 162, 235)',
-    pointBackgroundColor: 'rgb(54, 162, 235)',
-    pointBorderColor: '#fff',
-    pointHoverBackgroundColor: '#fff',
-    pointHoverBorderColor: 'rgb(54, 162, 235)'
   }]
 };
 

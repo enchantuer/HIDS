@@ -115,10 +115,10 @@ packet_count = 0
 # Add the alerts to the database
 def add_in_database(file_path, agent):
     filename = os.path.basename(file_path)
-    parts = filename.split("_")
+    parts = filename.split(".")[0].split("_")
 
-    alert_source = parts[0]
-    alert_type = parts[1].split(".")[0]
+    alert_source = parts[2]
+    alert_type = parts[3]
     alert_description = f"Alerte détectée de type '{alert_type}' par '{alert_source}'"
     alert_level = 3 if alert_type.lower() == "DDOS" else 1
 
