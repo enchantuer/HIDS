@@ -13,8 +13,9 @@ import local.analyse_yara as analyse_yara
 import local.analyse_snort as analyse_snort
 import online.analyse_VT as analyse_VT
 import online.analyse_AbuseIPDB as analyse_AbuseIPDB
+import ia.predict as predict 
 
-from config import LOCAL, ONLINE, IA
+from config import LOCAL, ONLINE, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE
 
 # Configuration
 ID_ALERT_FILE = "id_alert.txt"  
@@ -148,22 +149,7 @@ if __name__ == '__main__':
             
 
     #-----ONLINE AUDIT------
-        if ONLINE == True:
-            #---VirusTotal---
-            alert_VT = analyse_VT.analyse_pcap_with_VT(filename)
-
-            if alert_VT != False and alert_VT != None:
-                #Rename the PCAP file
-                new_filename = rename_pcap(alert_VT, "online_virustotal", filename)
-
-                #Send the file to the server and save it in the directory
-                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
-                shutil.move(new_filename,save_dir_alert)
-
-                flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-                continue
-            
+        if ONLINE == True:      
             #---AbuseIPDB---
             alert_abuse = analyse_AbuseIPDB.analyse_pcap_with_abuseIPDB(filename)
 
@@ -179,10 +165,53 @@ if __name__ == '__main__':
                 print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
                 continue
 
+            #---VirusTotal---
+            alert_VT = analyse_VT.analyse_pcap_with_VT(filename)
+
+            if alert_VT != False and alert_VT != None:
+                #Rename the PCAP file
+                new_filename = rename_pcap(alert_VT, "online_virustotal", filename)
+
+                #Send the file to the server and save it in the directory
+                #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                shutil.move(new_filename,save_dir_alert)
+
+                flag = True
+                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                continue
+
+
     #-----IA AUDIT-----
-        #if IA == True:
+        if IA == True:
+            #---Random Forest---
+            if RANDOM_FOREST == True:
+                alert_random = predict.prediction_with_random_forest(filename)
+                if alert_random != False and alert_random != None:
+                    #Rename the PCAP file
+                    new_filename = rename_pcap(alert_random, "ia_random_forest", filename)
 
+                    #Send the file to the server and save it in the directory
+                    #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                    shutil.move(new_filename,save_dir_alert)
 
+                    flag = True
+                    print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                    continue
+
+            #---Support vector machine---
+            if SUPPORT_VECTOR_MACHINE == True:
+                alert_vector = predict.prediction_with_support_vector_machine(filename)
+                if alert_vector != False and alert_vector != None:
+                    #Rename the PCAP file
+                    new_filename = rename_pcap(alert_vector, "ia_support_vector_machine", filename)
+
+                    #Send the file to the server and save it in the directory
+                    #subprocess.run(["sudo","python3", "communication_client.py", new_filename])      
+                    shutil.move(new_filename,save_dir_alert)
+
+                    flag = True
+                    print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                    continue
 
     #If no alert detected
         if flag == False:
