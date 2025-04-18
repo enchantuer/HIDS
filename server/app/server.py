@@ -258,6 +258,8 @@ def start_server():
                     agent = Agent.objects.get(common_name=cn)
                     print(f" Agent : {agent.name}", flush=True)
                     if agent:
+                        agent.adresse = addr[0]
+                        agent.save()
                         # Get the message type (max size : 256 octets)
                         com_type = conn.recv(256)
                         print("com_type :", com_type, flush=True)
@@ -267,9 +269,6 @@ def start_server():
                                 # Receive the file of the client
                                 receive_alert(conn, agent)
                             if com_type == "CONNECTION":
-                                agent.adresse = addr[0]
-                                agent.save()
-                                print(f" Agent : {agent.name}, ip updated", flush=True)
                                 check_update(conn)
 
             # Send a file to the client
