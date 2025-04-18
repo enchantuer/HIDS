@@ -4,7 +4,6 @@ import socket
 import ssl
 import os
 import argparse
-import uuid
 
 from cryptography import x509
 from cryptography.x509 import NameOID
@@ -12,14 +11,15 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization, hashes
 
 # Configuration
+CLIENT_NAME = os.environ.get('NAME')
 SERVER_HOST, SERVER_PORT = "django_app", 4433  # IP du serveur
 # SERVER_HOST, SERVER_PORT = "172.20.10.6", 4433  # IP du serveur
-CERT_FILE = "certs/client1_cert.pem"
-KEY_FILE = "certs/client1_key.pem"
+CERT_FILE = f"certs/{CLIENT_NAME}_cert.pem"
+KEY_FILE = f"certs/{CLIENT_NAME}_key.pem"
 CA_FILE = "certs/ca_cert.pem"
-CSR_FILE = "certs/client.csr"
-SAVE_DIR = os.path.expanduser("Fichiers_recus")  # Dossier où enregistrer les fichiers reçus
+CSR_FILE = f"certs/{CLIENT_NAME}.csr"
 APP_DIR = "dossier_local"
+SAVE_DIR = os.path.expanduser(f"{APP_DIR}/Fichiers_recus")  # Dossier où enregistrer les fichiers reçus
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 print(os.path.dirname(os.path.abspath(__file__)), flush=True)
@@ -44,16 +44,14 @@ def generate_key_and_csr():
             encryption_algorithm=serialization.NoEncryption()
         ))
 
-    random_cn = f"client-{uuid.uuid4().hex[:8]}"
-
     csr = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([
-        x509.NameAttribute(NameOID.COMMON_NAME, random_cn),
+        x509.NameAttribute(NameOID.COMMON_NAME, CLIENT_NAME),
     ])).sign(key, hashes.SHA256())
 
     with open(CSR_FILE, "wb") as f:
         f.write(csr.public_bytes(serialization.Encoding.PEM))
 
-    print(f"[✓] CSR générée avec CN = {random_cn}")
+    print(f"[✓] CSR générée avec CN = {CLIENT_NAME}")
 
 def compute_sha256(file_path):
     h = hashlib.sha256()
