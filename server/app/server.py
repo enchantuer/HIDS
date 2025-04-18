@@ -118,7 +118,7 @@ def add_in_database(file_path, agent):
     parts = filename.split("_")
 
     alert_source = parts[0]
-    alert_type = parts[1]
+    alert_type = parts[1].split(".")[0]
     alert_description = f"Alerte détectée de type '{alert_type}' par '{alert_source}'"
     alert_level = 3 if alert_type.lower() == "DDOS" else 1
 
