@@ -44,7 +44,7 @@ services:
     environment:
       NAME: "client1"
     volumes:
-      - ./client/dossier_local:/app/dossier_local
+      - ./client1:/app/dossier_local
       - ./certs:/app/certs
     profiles:
       - agents
@@ -56,7 +56,7 @@ services:
     environment:
       NAME: "client2"
     volumes:
-      - ./client/dossier_local:/app/dossier_local
+      - ./client2:/app/dossier_local
       - ./certs:/app/certs
     profiles:
       - agents
