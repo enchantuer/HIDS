@@ -22,9 +22,6 @@ APP_DIR = "dossier_local"
 SAVE_DIR = os.path.expanduser(f"{APP_DIR}/Fichiers_recus")  # Dossier où enregistrer les fichiers reçus
 os.makedirs(SAVE_DIR, exist_ok=True)
 
-print(os.path.dirname(os.path.abspath(__file__)), flush=True)
-
-
 # Function to create the SSL context (TLS)
 def create_ssl_context():
     context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)

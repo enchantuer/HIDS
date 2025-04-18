@@ -267,7 +267,7 @@ def start_server():
                                 # Receive the file of the client
                                 receive_alert(conn, agent)
                             if com_type == "CONNECTION":
-                                agent.adresse = addr
+                                agent.adresse = addr[0]
                                 agent.save()
                                 print(f" Agent : {agent.name}, ip updated", flush=True)
                                 check_update(conn)
