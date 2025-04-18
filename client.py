@@ -4,6 +4,12 @@ import socket
 import ssl
 import os
 import argparse
+import uuid
+
+from cryptography import x509
+from cryptography.x509 import NameOID
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization, hashes
 
 # Configuration
 SERVER_HOST, SERVER_PORT = "server", 4433  # IP du serveur
@@ -11,6 +17,7 @@ SERVER_HOST, SERVER_PORT = "server", 4433  # IP du serveur
 CERT_FILE = "certs/client1_cert.pem"
 KEY_FILE = "certs/client1_key.pem"
 CA_FILE = "certs/ca_cert.pem"
+CSR_FILE = "certs/client.csr"
 SAVE_DIR = os.path.expanduser("Fichiers_recus")  # Dossier où enregistrer les fichiers reçus
 os.makedirs(SAVE_DIR, exist_ok=True)
 
@@ -23,6 +30,29 @@ def create_ssl_context():
     context.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)
     context.load_verify_locations(CA_FILE)
     return context
+
+
+def generate_key_and_csr():
+    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+
+    # Sauvegarder la clé privée
+    with open(KEY_FILE, "wb") as f:
+        f.write(key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.TraditionalOpenSSL,
+            encryption_algorithm=serialization.NoEncryption()
+        ))
+
+    random_cn = f"client-{uuid.uuid4().hex[:8]}"
+
+    csr = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([
+        x509.NameAttribute(NameOID.COMMON_NAME, random_cn),
+    ])).sign(key, hashes.SHA256())
+
+    with open(CSR_FILE, "wb") as f:
+        f.write(csr.public_bytes(serialization.Encoding.PEM))
+
+    print(f"[✓] CSR générée avec CN = {random_cn}")
 
 def compute_sha256(file_path):
     h = hashlib.sha256()
@@ -38,6 +68,24 @@ def get_local_hashes(folder_path):
         if os.path.isfile(full_path):
             hashes[filename] = compute_sha256(full_path)
     return hashes
+
+def send_csr_and_receive_cert():
+    # Connexion non sécurisée temporaire pour l'envoi de la CSR
+    with socket.create_connection((SERVER_HOST, SERVER_PORT)) as sock:
+        # sock.sendall(b"CSR_REQUEST".ljust(256, b'\0'))  # Type de message
+        with open(CSR_FILE, "rb") as f:
+            csr_data = f.read()
+            sock.sendall(len(csr_data).to_bytes(4, 'big'))
+            sock.sendall(csr_data)
+
+        # Réception du certificat signé
+        cert_len = int.from_bytes(sock.recv(4), 'big')
+        signed_cert = sock.recv(cert_len)
+
+        with open(CERT_FILE, "wb") as f:
+            f.write(signed_cert)
+
+        print("[✓] Certificat signé reçu et sauvegardé.")
 
 # Function to send a file to the server
 def send_file(conn, file_path):
@@ -74,6 +122,11 @@ def receive_file(conn):
 
 # Function to start the client
 def start_client(file_to_send):
+    if not os.path.exists(CERT_FILE):
+        print("[!] Certificat non trouvé. Génération CSR...")
+        generate_key_and_csr()
+        send_csr_and_receive_cert()
+
     context = create_ssl_context()
 
     with socket.create_connection((SERVER_HOST, SERVER_PORT)) as sock:

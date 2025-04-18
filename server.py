@@ -247,6 +247,7 @@ def start_server():
                 cert_info = conn.getpeercert()
                 if not cert_info:
                     # 5. Si le client ne présente pas de certificat, envoyer une demande de certificat
+
                     print("[*] Aucun certificat reçu, demande de certificat.")
                     handle_cert_request(conn)
 
