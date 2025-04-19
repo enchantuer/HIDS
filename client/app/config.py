@@ -1,7 +1,7 @@
 import os
 import json
 
-CONFIG_PATH = "config.json"
+CONFIG_PATH = "dossier_local/config.json"
 
 # Valeurs par défaut au cas où le fichier est absent
 default_config = {

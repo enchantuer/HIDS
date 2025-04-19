@@ -1,7 +1,8 @@
+import subprocess
+
 import schedule
 import time
 from get_update import start_client as get_update
-from client import run
 
 # Exécute immédiatement une première fois
 get_update()
@@ -20,4 +21,5 @@ if __name__ == "__main__":
     threading.Thread(target=scheduler_loop, daemon=True).start()
 
     # Lancer le client principal (blocage ici)
-    run()
+    get_update()
+    subprocess.run(["python", "client.py"])

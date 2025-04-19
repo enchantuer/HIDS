@@ -38,6 +38,7 @@ services:
       - ./to_send:/app/dossier_partage
 
   client1:
+    image: client
     build: ./client
     depends_on:
       - django_app
@@ -54,7 +55,7 @@ services:
       - agents
 
   client2:
-    build: ./client
+    image: client
     depends_on:
       - django_app
     environment:

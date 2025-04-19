@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Lance snif
-python retrieve_request.py &
+python retrieve_requests.py &
 
 # Lance le main
 python main.py

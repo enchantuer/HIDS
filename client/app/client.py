@@ -17,6 +17,9 @@ import dossier_local.ia.predict as predict
 from send_alert import start_client as send_alert
 from config import YARA, SNORT, SURICATA,  VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE
 
+# Print the config
+print(YARA, SNORT, SURICATA, VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE)
+
 # Configuration
 ID_ALERT_FILE = "id_alert.txt"
 save_dir_alert = "alerts"
