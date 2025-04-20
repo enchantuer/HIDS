@@ -32,17 +32,17 @@ def analyse_pcap_with_yara(pcap_path, yara_rules_path):
         # Load the YARA rules
         rules = yara.compile(filepath=yara_rules_path)
     except yara.SyntaxError as e:
-        print(f"Error of syntax in YARA rules : {e}")
+        # print(f"Error of syntax in YARA rules : {e}")
         return None
 
     try:
         # Load the PCAP file
         packets = rdpcap(pcap_path)
         if len(packets) == 0:
-            print("The PCAP file is empty.")
+            # print("The PCAP file is empty.")
             return None
     except Exception as e:
-        print(f"Error in the reading of the PCAP file : {e}")
+        # print(f"Error in the reading of the PCAP file : {e}")
         return None
 
     # Browse each package and extract the payload
@@ -59,7 +59,7 @@ def analyse_pcap_with_yara(pcap_path, yara_rules_path):
                     packet_summary = pkt.summary()
 
                     # Print the alert
-                    print(f"\n ALERT : {alert_name}")
+                    # print(f"\n ALERT : {alert_name}")
                     print(f" - Package in question : {packet_summary}")
                     return alert_name
     return None

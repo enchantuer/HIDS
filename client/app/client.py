@@ -17,9 +17,6 @@ import dossier_local.ia.predict as predict
 from send_alert import start_client as send_alert
 from config import YARA, SNORT, SURICATA,  VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE
 
-# Print the config
-print(YARA, SNORT, SURICATA, VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE)
-
 # Configuration
 ID_ALERT_FILE = "dossier_local/id_alert.txt"
 save_dir_alert = "dossier_local/alerts"
@@ -113,7 +110,7 @@ def run():
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                 continue
 
         if SNORT == True:
@@ -122,7 +119,6 @@ def run():
             alert_snort = analyse_snort.analyse_pcap_with_snort(filename, rules)
 
             if alert_snort != False and alert_snort != None:
-                print(alert_snort)
                 # Rename the PCAP file
                 new_filename = rename_pcap(alert_snort, "local_snort", filename)
 
@@ -132,7 +128,7 @@ def run():
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                 continue
 
         if SURICATA == True:
@@ -149,7 +145,7 @@ def run():
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                 continue
 
         # -----ONLINE AUDIT------
@@ -167,7 +163,7 @@ def run():
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                 continue
 
         if VIRUS_TOTAL == True:
@@ -184,7 +180,7 @@ def run():
                 shutil.move(new_filename, save_dir_alert)
 
                 flag = True
-                print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                 continue
 
         # -----IA AUDIT-----
@@ -203,7 +199,7 @@ def run():
                         shutil.move(new_filename, save_dir_alert)
 
                         flag = True
-                        print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                        print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                         continue
                 except Exception as e:
                     pass
@@ -224,7 +220,7 @@ def run():
                         shutil.move(new_filename, save_dir_alert)
 
                         flag = True
-                        print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                        print(f"Alert detected, file {filename} renamed into : {new_filename}, and save in Alerts.")
                         continue
                 except Exception as e:
                     pass

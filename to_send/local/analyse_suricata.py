@@ -80,9 +80,9 @@ def analyse_pcap_with_suricata(pcap_path):
 
         # Show only one alert per package
         if best_match:
-            print(f" ALERT : {best_match[0]}")
+            # print(f" ALERT : {best_match[0]}")
             print(f" - Package in question : {pkt.summary()}")
-            print(f" - Detected content : {best_match[1]}\n")
+            # print(f" - Detected content : {best_match[1]}\n")
             return best_match[0]
         else:
             return False

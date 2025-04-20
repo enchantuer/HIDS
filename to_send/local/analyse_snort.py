@@ -143,7 +143,7 @@ def analyse_pcap_with_snort(pcap_path, rules):
                         best_match = (rule["msg"], detected_content)
 
             if best_match:
-                print(f"\n ALERT : {best_match[0]}")
+                # print(f"\n ALERT : {best_match[0]}")
                 print(f" - Package in question : {pkt.summary()}")
                 alert_names.add(best_match[0])
             else: 
