@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(".."))
 from config import VT_API_KEY
 
 # Configuration
-cache_file = "vt_cache.json"
+cache_file = "dossier_local/vt_cache.json"
 
 
 # Loading VirusTotal cache

@@ -21,8 +21,8 @@ from config import YARA, SNORT, SURICATA,  VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST,
 print(YARA, SNORT, SURICATA, VIRUS_TOTAL, IPDB, IA, RANDOM_FOREST, SUPPORT_VECTOR_MACHINE)
 
 # Configuration
-ID_ALERT_FILE = "id_alert.txt"
-save_dir_alert = "alerts"
+ID_ALERT_FILE = "dossier_local/id_alert.txt"
+save_dir_alert = "dossier_local/alerts"
 os.makedirs(save_dir_alert, exist_ok=True)
 
 
