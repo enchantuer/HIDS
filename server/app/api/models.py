@@ -43,7 +43,7 @@ class Alert(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     source = models.CharField(max_length=50)
-    type = models.CharField(max_length=20)
+    type = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     level = models.IntegerField()
     pcap = models.FileField(upload_to="static/alerts/%y/%m/%d", null=True, blank=True)

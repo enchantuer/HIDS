@@ -75,7 +75,7 @@ def rename_pcap(name_alert, methode, filename):
     date_str = datetime.datetime.now().strftime("%d_%m_%Y")
 
     # Creation of the new name of the file
-    new_filename = f"{id_alert}_{date_str}_{methode}_{clean_name_alert}.pcap"
+    new_filename = f"{id_alert}__{date_str}__{methode}__{clean_name_alert}.pcap"
 
     # Get the original repertory
     directory = os.path.dirname(filename)
@@ -100,7 +100,7 @@ def run():
         # -----LOCAL AUDIT------
         if YARA == True:
             # ---Yara---
-            yara_rules_file = "local/rules/yara-rules-full.yar"
+            yara_rules_file = "dossier_local/local/rules/yara-rules-full.yar"
             alert_yara = analyse_yara.analyse_pcap_with_yara(filename, yara_rules_file)
 
             if alert_yara != False and alert_yara != None:
@@ -118,10 +118,11 @@ def run():
 
         if SNORT == True:
             # ---Snort---
-            rules = analyse_snort.load_snort_rules("local/rules/snort3-community.rules")
+            rules = analyse_snort.load_snort_rules("dossier_local/local/rules/snort3-community.rules")
             alert_snort = analyse_snort.analyse_pcap_with_snort(filename, rules)
 
             if alert_snort != False and alert_snort != None:
+                print(alert_snort)
                 # Rename the PCAP file
                 new_filename = rename_pcap(alert_snort, "local_snort", filename)
 
@@ -190,35 +191,44 @@ def run():
         if IA == True:
             # ---Random Forest---
             if RANDOM_FOREST == True:
-                alert_random = predict.prediction_with_random_forest(filename)
-                if alert_random != False and alert_random != None:
-                    # Rename the PCAP file
-                    new_filename = rename_pcap(alert_random, "ia_random_forest", filename)
+                try:
+                    alert_random = predict.prediction_with_random_forest(filename)
+                    if alert_random != False and alert_random != None and alert_random != "DoS attacks-SlowHTTPTest":
+                        # Rename the PCAP file
+                        new_filename = rename_pcap(alert_random, "ia_random_forest", filename)
 
-                    # Send the file to the server and save it in the directory
-                    # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
-                    send_alert(new_filename)
-                    shutil.move(new_filename, save_dir_alert)
+                        # Send the file to the server and save it in the directory
+                        # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                        send_alert(new_filename)
+                        shutil.move(new_filename, save_dir_alert)
 
-                    flag = True
-                    print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-                    continue
+                        flag = True
+                        print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                        continue
+                except Exception as e:
+                    pass
+                    # print(e)
 
             # ---Support vector machine---
             if SUPPORT_VECTOR_MACHINE == True:
-                alert_vector = predict.prediction_with_support_vector_machine(filename)
-                if alert_vector != False and alert_vector != None:
-                    # Rename the PCAP file
-                    new_filename = rename_pcap(alert_vector, "ia_support_vector_machine", filename)
+                try:
+                    alert_vector = predict.prediction_with_support_vector_machine(filename)
+                    if alert_vector != False and alert_vector != None and alert_vector != "DoS attacks-Hulk" and alert_vector != "DDOS attack-HOIC":
+                        print(alert_vector)
+                        # Rename the PCAP file
+                        new_filename = rename_pcap(alert_vector, "ia_support_vector_machine", filename)
 
-                    # Send the file to the server and save it in the directory
-                    # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
-                    send_alert(new_filename)
-                    shutil.move(new_filename, save_dir_alert)
+                        # Send the file to the server and save it in the directory
+                        # subprocess.run(["sudo","python3", "communication_client.py", new_filename])
+                        send_alert(new_filename)
+                        shutil.move(new_filename, save_dir_alert)
 
-                    flag = True
-                    print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
-                    continue
+                        flag = True
+                        print(f"Alert detected, file rename : {new_filename}, and save in Alerts.")
+                        continue
+                except Exception as e:
+                    pass
+                    # print(e)
 
         # If no alert detected
         if flag == False:

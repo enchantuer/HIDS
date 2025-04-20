@@ -3,7 +3,7 @@ import os
 import random
 
 # Configuration
-save_dir = "Captures"
+save_dir = "dossier_local/Captures"
 os.makedirs(save_dir, exist_ok=True)
 packet_count = 0
 

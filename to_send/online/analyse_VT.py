@@ -110,6 +110,7 @@ def analyse_pcap_with_VT(pcap_path):
             domain_malicious = False
 
         if file_malicious or ip_malicious or domain_malicious:
+            attack_name = ""
             if file_malicious:
                 attack_name = "malicious_file"
             elif ip_malicious:
@@ -118,8 +119,8 @@ def analyse_pcap_with_VT(pcap_path):
                 attack_name = "malicious_domain"
 
             malicious_packets.append((pkt, attack_name))
-
-    return attack_name
+            return attack_name
+    return None
 
 
 """

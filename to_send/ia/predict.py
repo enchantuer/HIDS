@@ -115,15 +115,15 @@ def convert(pcap_files):
     # === Remove Unwanted Columns ===
     columns_to_remove = ["Flow ID", "Fwd Header Length.1", "Source IP", "Src IP",
                          "Source Port", "Src Port", "Destination IP", "Dst IP",
-                         "Destination Port", "Dst Port", "Timestamp"]
+                         "Destination Port", "Dst Port" , "Timestamp"]
 
     df = df.drop(columns=[col for col in columns_to_remove if col in df], errors="ignore")
 
     return df
 
 def predict(pcap_df, model, corr):
-    model = pickle.load(open(f'ia/model/{model}', 'rb'))
-    select = pd.read_csv(f"ia/data_selection/{corr}", header=None)
+    model = pickle.load(open(f'dossier_local/ia/model/{model}', 'rb'))
+    select = pd.read_csv(f"dossier_local/ia/data_selection/{corr}", header=None)
     df = pcap_df[select[0].tolist()]
     k = model.predict(df)
     return k
@@ -148,7 +148,7 @@ def prediction_with_random_forest(pcap_file):
     result.extend(predict(df, "rf_6.pkl", "630.csv").tolist())
     result.extend(predict(df, "rf_7.pkl", "770.csv").tolist())
     attack_name = return_name_attack(result)
-    return result
+    return attack_name
 
 def prediction_with_support_vector_machine(pcap_file):
     result = []

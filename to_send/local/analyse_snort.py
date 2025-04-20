@@ -149,7 +149,7 @@ def analyse_pcap_with_snort(pcap_path, rules):
             else: 
                 return False
 
-    return list(alert_names)
+    return list(alert_names)[0] if alert_names else None
 
 
 '''rules_file = "Rules/snort3-community.rules"

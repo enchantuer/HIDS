@@ -2,9 +2,9 @@
     "YARA": true,
     "SURICATA": true,
     "SNORT": true,
-    "VIRUS_TOTAL": true,
-    "IPDB": true,
+    "VIRUS_TOTAL": false,
+    "IPDB": false,
     "IA": true,
-    "RANDOM_FOREST": false,
+    "RANDOM_FOREST": true,
     "SUPPORT_VECTOR_MACHINE": true
 }

@@ -12,7 +12,7 @@ def analyse_pcap_with_suricata(pcap_path):
 
     :param pcap_path : the path to the pcap file who needed to be analysed.
     """
-    rules_file = "local/rules/suricata_rules_optimized.json"
+    rules_file = "dossier_local/local/rules/suricata_rules_optimized.json"
     with open(rules_file, "r", encoding="utf-8") as f:
         rules = json.load(f)
 

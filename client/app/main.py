@@ -4,9 +4,6 @@ import schedule
 import time
 from get_update import start_client as get_update
 
-# Exécute immédiatement une première fois
-get_update()
-
 # Planifie tous les jours à 3h00
 schedule.every().day.at("03:00").do(get_update)
 
@@ -20,6 +17,7 @@ if __name__ == "__main__":
     import threading
     threading.Thread(target=scheduler_loop, daemon=True).start()
 
-    # Lancer le client principal (blocage ici)
+    # Exécute immédiatement une première fois
     get_update()
+    # Lancer le client principal (blocage ici)
     subprocess.run(["python", "client.py"])

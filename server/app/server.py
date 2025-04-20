@@ -115,7 +115,7 @@ packet_count = 0
 # Add the alerts to the database
 def add_in_database(file_path, agent):
     filename = os.path.basename(file_path)
-    parts = filename.split(".")[0].split("_")
+    parts = filename.split(".")[0].split("__")
 
     alert_source = parts[2]
     alert_type = parts[3]
@@ -145,7 +145,7 @@ def receive_alert(conn, agent):
     try:
         while True:
             # Read the name of the file (max size : 256 octets)
-            filename_padded = conn.recv(32)
+            filename_padded = conn.recv(256)
             if not filename_padded:
                 break
             filename = filename_padded.rstrip(b'\0').decode()

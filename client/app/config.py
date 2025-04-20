@@ -26,11 +26,11 @@ else:
 config = {**default_config, **user_config}
 
 # Utilisable ailleurs
-YARA = config["YARA"],
-SURICATA = config["SURICATA"],
-SNORT = config["SNORT"],
-VIRUS_TOTAL = config["VIRUS_TOTAL"],
-IPDB = config["IPDB"],
+YARA = config["YARA"]
+SURICATA = config["SURICATA"]
+SNORT = config["SNORT"]
+VIRUS_TOTAL = config["VIRUS_TOTAL"]
+IPDB = config["IPDB"]
 IA = config["IA"]
 RANDOM_FOREST = config["RANDOM_FOREST"]
 SUPPORT_VECTOR_MACHINE = config["SUPPORT_VECTOR_MACHINE"]
