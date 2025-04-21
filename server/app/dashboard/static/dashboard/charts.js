@@ -65,12 +65,6 @@ const dataAgent = {
     labels: agentData[0],
     datasets: [
         {
-            label: 'Nombre requetes sans alertes',
-            data: agentData[1].request_without_alert_per_agent,
-            backgroundColor: 'rgb(0,178,255)',
-            stack: 'stack'
-        },
-        {
             label: 'Nombre d\'alertes',
             data: agentData[1].alert_per_agent,
             backgroundColor: 'rgb(255,0,21)',
