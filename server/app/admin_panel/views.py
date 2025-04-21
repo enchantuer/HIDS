@@ -23,23 +23,33 @@ def utilisateurs(request):
 def verification(request):
     def get_ia_alert_stats():
         # Filtrer toutes les alertes IA et grouper par type
-        ia_alerts = (
-            Alert.objects.filter(source__icontains="ia")
+        ia_rf_alerts = (
+            Alert.objects.filter(source__iexact="ia_random_forest")
+            .values("type")
+            .annotate(total=Count("id"))
+        )
+        ia_svm_alerts = (
+            Alert.objects.filter(source__iexact="ia_support_vector_machine")
             .values("type")
             .annotate(total=Count("id"))
         )
 
-        # Construction du format demandé
-        labels = [entry["type"] for entry in ia_alerts]
-        data = [entry["total"] for entry in ia_alerts]
+        # On utilise un set pour fusionner les labels (types d'alerte uniques)
+        all_labels = sorted(set(entry["type"] for entry in ia_rf_alerts) | set(entry["type"] for entry in ia_svm_alerts))
+
+        # Crée des dictionnaires pour un accès rapide
+        rf_data_dict = {entry["type"]: entry["total"] for entry in ia_rf_alerts}
+        svm_data_dict = {entry["type"]: entry["total"] for entry in ia_svm_alerts}
+
+        # Aligne les données sur les labels (type d’alerte)
+        rf_data = [rf_data_dict.get(label, 0) for label in all_labels]
+        svm_data = [svm_data_dict.get(label, 0) for label in all_labels]
 
         return {
-            "labels": labels,
+            "labels": all_labels,
             "data": [
-                {
-                    "name": "Nombre d'alertes",
-                    "data": data
-                }
+                {"name": "Alertes Random Forest", "data": rf_data},
+                {"name": "Alertes SVM", "data": svm_data}
             ]
         }
 

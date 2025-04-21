@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/admin_verification.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/admin_navbar.css' %}">
-    <script src="{% static 'admin_panel/admin_verification.js' %}"></script>
-        <script>
+    <script>
         const UPDATE_CONFIG = "{% url 'update_config' %}";
         const GET_CONFIG = "{% url 'get_config'%}";
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="{% static 'admin_panel/admin_verification.js' %}" defer></script>
+    {{ chart.ia_stats|json_script:"ia-data" }}
 {% endblock %}
 {% block content %}
 
@@ -57,20 +59,13 @@
                 <input type="checkbox" id="ipdb" name="ipdb"><span class="slider round"></span>
             </label>
         </div>
-        <div class="verif">
-            <p>OPE</p>
-            <label class="switch">
-                <input type="checkbox" id="ope" name="ope"><span class="slider round"></span>
-            </label>
-        </div>
-
     </div>
 </div>
 <div class="card ia">
-    <h2>Ia</h2>
+    <h2>IA</h2>
     <div class="orga-ia">
         <div class="stat-ia">
-            hey
+            <canvas class="chart" id="ia-stats-chart"></canvas>
         </div>
         <div class="ligne-ia">
 
