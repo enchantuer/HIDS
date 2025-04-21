@@ -75,5 +75,5 @@ Le serveur **centralise et affiche les alertes** grâce à une **interface graph
 
    Pour le pannel administrateur :  
    ```
-   http://localhost:8000/admin
+   http://localhost:8000/admin_panel
    ```
